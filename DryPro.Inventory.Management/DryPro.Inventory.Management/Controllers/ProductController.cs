@@ -1,6 +1,7 @@
 ﻿using DryPro.Inventory.Management.Application.Commands;
 using DryPro.Inventory.Management.Application.Queries;
 using DryPro.Inventory.Management.Application.Responses;
+using DryPro.Inventory.Management.Common.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace DryPro.Inventory.Management.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("AddNewProduct")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)
         {
@@ -28,16 +29,16 @@ namespace DryPro.Inventory.Management.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("GetAllProducts")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Product>> Get() => await _mediator.Send(new GetAllProductsQuery());
+        public async Task<List<Core.Entities.Product>> GetAllProducts() => await _mediator.Send(new GetAllProductsQuery());
 
-        [HttpGet]
+        [HttpGet("GetByType/{{type}}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Product>> GetByType() => await _mediator.Send(new GetAllProductsQuery());
+        public async Task<List<Core.Entities.Product>> GetByType([FromQuery] ProductType type) => await _mediator.Send(new GetByTypeQuery() { Type = type });
 
-        [HttpGet]
+        [HttpGet("GetById/{{id}}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Product>> GetById() => await _mediator.Send(new GetAllProductsQuery());
+        public async Task<Core.Entities.Product> GetById([FromQuery] int id) => await _mediator.Send(new GetByIdQuery() { Id = id });
     }
 }
