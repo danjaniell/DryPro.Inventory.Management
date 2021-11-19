@@ -6,6 +6,7 @@ using DryPro.Inventory.Management.Core.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DryPro.Inventory.Management.Common.Enums;
 
 namespace DryPro.Inventory.Management.Infrastructure.Repositories
 {
@@ -15,6 +16,6 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetProductByName(string productName) => await _productContext.Products.Where(x => x.Name.Equals(productName)).ToListAsync();
+        public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Products.Where(x => x.Type==type).ToListAsync();
     }
 }
