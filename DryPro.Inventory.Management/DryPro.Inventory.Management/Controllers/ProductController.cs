@@ -21,7 +21,7 @@ namespace DryPro.Inventory.Management.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("AddNewProduct")]
+        [HttpPost("AddNew")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)
         {
@@ -29,7 +29,7 @@ namespace DryPro.Inventory.Management.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetAllProducts")]
+        [HttpGet("GetAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<List<Core.Entities.Product>> GetAllProducts() => await _mediator.Send(new GetAllProductsQuery());
 
