@@ -1,14 +1,15 @@
-﻿using DryPro.Inventory.Management.Common.Enums;
+﻿using DryPro.Inventory.Management.Application.Responses;
+using DryPro.Inventory.Management.Common.Enums;
+using DryPro.Inventory.Management.Core.Entities;
+using MediatR;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DryPro.Inventory.Management.Core.Entities
+namespace DryPro.Inventory.Management.Application.Commands
 {
-    public class Product
+    public class UpdateProductCommand : IRequest<int?>
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public ProductType Type { get; set; }
         public ProductColor Color { get; set; }
@@ -16,6 +17,6 @@ namespace DryPro.Inventory.Management.Core.Entities
         public decimal SoldPrice { get; set; }
         public decimal Cost { get; set; }
         public decimal Discount { get; set; }
-        public ICollection<AuxilliaryItem> AuxilliaryItems { get; set; }
+        public IEnumerable<AuxilliaryItem> AuxilliaryItems { get; set; }
     }
 }

@@ -31,6 +31,6 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Products.Where(x => x.Type==type).ToListAsync();
+        public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Set<Product>().Where(x => x.Type==type).ToListAsync();
     }
 }

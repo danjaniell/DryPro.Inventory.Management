@@ -21,7 +21,7 @@ namespace DryPro.Inventory.Management.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("AddNew")]
+        [HttpPost("Add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)
         {
@@ -37,8 +37,35 @@ namespace DryPro.Inventory.Management.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<List<Core.Entities.Product>> GetByType([FromQuery] ProductType type) => await _mediator.Send(new GetByTypeQuery() { Type = type });
 
-        [HttpGet("GetById/{{id}}")]
+        [HttpGet("Get/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<Core.Entities.Product> GetById([FromQuery] int id) => await _mediator.Send(new GetByIdQuery() { Id = id });
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<Core.Entities.Product> GetById([FromRoute] int id) => await _mediator.Send(new GetByIdQuery() { Id = id });
+
+        [HttpPost("Update")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<int?>> UpdateProduct([FromBody] UpdateProductCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result is null)
+            {
+                return NoContent();
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("Delete/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult<int?>> DeleteProduct([FromRoute] int id)
+        {
+            var result = await _mediator.Send(new DeleteProductCommand() { Id = id });
+            if (result is null)
+            {
+                return NoContent();
+            }
+            return Ok(result);
+        }
     }
 }

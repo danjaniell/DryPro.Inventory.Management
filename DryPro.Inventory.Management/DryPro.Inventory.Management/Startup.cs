@@ -30,7 +30,8 @@ namespace DryPro.Inventory.Management
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ProductContext>(options => options.UseInMemoryDatabase(databaseName: "ProductsDB"), ServiceLifetime.Scoped);
+            services.AddDbContext<ProductContext>(options => options.UseInMemoryDatabase(databaseName: "ProductsDB").UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
+            services.AddScoped<ProductContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -46,7 +47,7 @@ namespace DryPro.Inventory.Management
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ProductContext db)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -57,8 +58,6 @@ namespace DryPro.Inventory.Management
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "DryPro.Inventory.Management v1");
                 });
             }
-
-            db.Database.EnsureCreated();
 
             app.UseHttpsRedirection();
 
