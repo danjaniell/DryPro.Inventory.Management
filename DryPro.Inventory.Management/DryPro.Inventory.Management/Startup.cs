@@ -7,7 +7,6 @@ using DryPro.Inventory.Management.Infrastructure.Repositories.Base;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +30,7 @@ namespace DryPro.Inventory.Management
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ProductContext>(x => x.UseNpgsql(Configuration.GetConnectionString("ProductDB")), ServiceLifetime.Singleton);
+            services.AddDbContext<ProductContext>(options => options.UseInMemoryDatabase(databaseName: "LabReportsDb").UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
