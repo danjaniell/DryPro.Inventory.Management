@@ -31,5 +31,13 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<List<Core.Entities.Product>> Get() => await _mediator.Send(new GetAllProductsQuery());
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<List<Core.Entities.Product>> GetByType() => await _mediator.Send(new GetAllProductsQuery());
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<List<Core.Entities.Product>> GetById() => await _mediator.Send(new GetAllProductsQuery());
     }
 }
