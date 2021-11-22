@@ -112,5 +112,53 @@ namespace DryPro.Inventory.Management.UI.Controllers
             }
             return View(result);
         }
+
+        // GET: Product/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            Product product = null;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync($"https://localhost:5001/api/Product/Get/{id}"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    product = JsonConvert.DeserializeObject<Product>(apiResponse);
+                }
+            }
+
+            if (product is null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        // POST: Product/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            int? result = null;
+            if (ModelState.IsValid)
+            {
+                HttpContent request = HttpContentHelper.CreateRequest(id);
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.PostAsync($"https://localhost:5001/api/Product/Delete/{id}", request))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        result = JsonConvert.DeserializeObject<int>(apiResponse);
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(result);
+        }
     }
 }
