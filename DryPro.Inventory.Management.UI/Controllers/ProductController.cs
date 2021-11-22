@@ -57,6 +57,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                         result = JsonConvert.DeserializeObject<Product>(apiResponse);
                     }
                 }
+                return RedirectToAction(nameof(Index));
             }
             return View(result);
         }
