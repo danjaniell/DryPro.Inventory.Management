@@ -7,6 +7,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.12" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DryPro.Inventory.Management.Common\DryPro.Inventory.Management.Common.csproj" />
+    <ProjectReference Include="..\DryPro.Inventory.Management\DryPro.Inventory.Management.Application\DryPro.Inventory.Management.Application.csproj" />
+    <ProjectReference Include="..\DryPro.Inventory.Management\DryPro.Inventory.Management.Core\DryPro.Inventory.Management.Core.csproj" />
   </ItemGroup>
 
 </Project>
