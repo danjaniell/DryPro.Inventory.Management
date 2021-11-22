@@ -25,8 +25,8 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 }
             }
             return View(products);
-        }        
-        
+        }
+
         // GET: Product/Create
         public IActionResult Create()
         {
@@ -57,6 +57,58 @@ namespace DryPro.Inventory.Management.UI.Controllers
                         result = JsonConvert.DeserializeObject<Product>(apiResponse);
                     }
                 }
+            }
+            return View(result);
+        }
+
+        // GET: Product/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+            Product product = null;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync($"https://localhost:5001/api/Product/Get/{id}"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    product = JsonConvert.DeserializeObject<Product>(apiResponse);
+                }
+            }
+            if (product is null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        // POST: Product/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind(nameof(Product.Id),
+                                                nameof(Product.Type),
+                                                nameof(Product.Color),
+                                                nameof(Product.SellingPrice),
+                                                nameof(Product.SoldPrice),
+                                                nameof(Product.Cost),
+                                                nameof(Product.Discount),
+                                                nameof(Product.AuxilliaryItems))] UpdateProductCommand command)
+        {
+            int? result = null;
+            if (ModelState.IsValid)
+            {
+                HttpContent request = HttpContentHelper.CreateRequest(command);
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.PostAsync("https://localhost:5001/api/Product/Update", request))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        result = JsonConvert.DeserializeObject<int>(apiResponse);
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(result);
         }
