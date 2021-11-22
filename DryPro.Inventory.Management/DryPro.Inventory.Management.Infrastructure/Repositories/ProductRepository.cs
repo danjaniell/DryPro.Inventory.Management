@@ -25,7 +25,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             {
                 var fixture = new Fixture();
                 var builder = fixture.Build<Product>();
-                int[] idRange = Enumerable.Range(1, 50).ToArray();
+                int[] idRange = Enumerable.Range(1, 10).ToArray();
                 var products = idRange.Select(x => builder.With(a => a.Id, x).Create()).ToList();
                 products.ForEach(x => AddAsync(x));
             }
