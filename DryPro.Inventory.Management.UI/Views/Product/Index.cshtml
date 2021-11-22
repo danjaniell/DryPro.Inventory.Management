@@ -47,12 +47,11 @@
             <td width="10%">@item.Cost</td>
             <td width="10%">@item.Discount</td>
             <td width="10%" class="text-center">
-                <a class="btn btn-primary mx-1" asp-action="View-Aux" asp-route-id="@item.Id">View</a>
+                <a class="btn btn-primary mx-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
             </td>
                 <td class="text-center">
                     <div class="btn-group" role="group">
                         <a class="btn btn-primary mx-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-primary mx-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         <a class="btn btn-danger mx-1" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </div>
                 </td>

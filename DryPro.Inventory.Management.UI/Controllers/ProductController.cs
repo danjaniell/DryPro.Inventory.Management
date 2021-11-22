@@ -61,6 +61,31 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(result);
         }
 
+        // GET: Product/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            Product result = null;
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync($"https://localhost:5001/api/Product/Get/{id}"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    result = JsonConvert.DeserializeObject<Product>(apiResponse);
+                }
+            }
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return View(result);
+        }
+
         // GET: Product/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
