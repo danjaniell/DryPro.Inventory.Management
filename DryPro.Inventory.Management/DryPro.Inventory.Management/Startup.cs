@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Globalization;
 using System.Reflection;
 
 namespace DryPro.Inventory.Management
@@ -22,6 +23,7 @@ namespace DryPro.Inventory.Management
 
         public Startup(IConfiguration configuration)
         {
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-PH");
             Configuration = configuration;
         }
 

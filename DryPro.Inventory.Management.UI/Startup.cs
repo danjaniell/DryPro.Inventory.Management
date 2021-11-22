@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace DryPro.Inventory.Management.UI
 {
@@ -15,6 +16,7 @@ namespace DryPro.Inventory.Management.UI
     {
         public Startup(IConfiguration configuration)
         {
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-PH");
             Configuration = configuration;
         }
 

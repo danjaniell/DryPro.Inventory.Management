@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DryPro.Inventory.Management.UI.Controllers
 {
-    public class ProductController : Controller
+    public class InventoryController : Controller
     {
         public async Task<IActionResult> Index()
         {
