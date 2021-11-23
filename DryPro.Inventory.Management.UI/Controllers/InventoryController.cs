@@ -2,6 +2,7 @@
 using DryPro.Inventory.Management.Application.Mappers;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
+using DryPro.Inventory.Management.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -13,6 +14,13 @@ namespace DryPro.Inventory.Management.UI.Controllers
 {
     public class InventoryController : Controller
     {
+        private readonly CreateProductViewModel _createProductViewModel;
+
+        public InventoryController(CreateProductViewModel createProductViewModel)
+        {
+            _createProductViewModel = createProductViewModel;
+        }
+
         public async Task<IActionResult> Index()
         {
             var products = new List<Product>();
@@ -30,36 +38,32 @@ namespace DryPro.Inventory.Management.UI.Controllers
         // GET: Product/Create
         public IActionResult Create()
         {
-            return View();
+            return View(_createProductViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind(nameof(Product.Id),
-                                                nameof(Product.Type),
-                                                nameof(Product.Color),
-                                                nameof(Product.SellingPrice),
-                                                nameof(Product.SoldPrice),
-                                                nameof(Product.Cost),
-                                                nameof(Product.Discount),
-                                                nameof(Product.AuxilliaryItems))] CreateProductCommand command)
+        public async Task<IActionResult> Create(int count, Product product)
         {
             Product result = null;
             if (ModelState.IsValid)
             {
-                //var command = ProductMapper.Mapper.Map<CreateProductCommand>(product);
+                var command = ProductMapper.Mapper.Map<CreateProductCommand>(product);
                 HttpContent request = HttpContentHelper.CreateRequest(command);
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.PostAsync("https://localhost:5001/api/Product/Add", request))
+                    for (int i = 0; i < count; i++)
                     {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<Product>(apiResponse);
+                        using (var response = await httpClient.PostAsync("https://localhost:5001/api/Product/Add", request))
+                        {
+                            string apiResponse = await response.Content.ReadAsStringAsync();
+                            result = JsonConvert.DeserializeObject<Product>(apiResponse);
+                        }
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(result);
+            return RedirectToAction(nameof(Create));
         }
 
         // GET: Product/Details/5
@@ -113,14 +117,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         // POST: Product/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind(nameof(Product.Id),
-                                                nameof(Product.Type),
-                                                nameof(Product.Color),
-                                                nameof(Product.SellingPrice),
-                                                nameof(Product.SoldPrice),
-                                                nameof(Product.Cost),
-                                                nameof(Product.Discount),
-                                                nameof(Product.AuxilliaryItems))] UpdateProductCommand command)
+        public async Task<IActionResult> Edit(UpdateProductCommand command)
         {
             int? result = null;
             if (ModelState.IsValid)
