@@ -32,8 +32,7 @@ namespace DryPro.Inventory.Management
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ProductContext>(options => options.UseInMemoryDatabase(databaseName: "ProductsDB").UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
-            services.AddScoped<ProductContext>();
+            services.AddDbContext<ProductContext>(options => options.UseInMemoryDatabase(databaseName: "ProductsDB"), ServiceLifetime.Singleton);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
