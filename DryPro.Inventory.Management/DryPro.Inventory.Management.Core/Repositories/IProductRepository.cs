@@ -9,7 +9,7 @@ namespace DryPro.Inventory.Management.Core.Repositories
     {
         Task<IEnumerable<Entities.Product>> GetProductByType(ProductType type);
 
-        Task<int?> AddAuxItemAsync(Entities.AuxilliaryItem entity);
+        Task<Entities.AuxilliaryItem> AddAuxItemAsync(Entities.AuxilliaryItem entity);
 
         Task<int?> DeleteAuxItemAsync(Entities.AuxilliaryItem entity);
 

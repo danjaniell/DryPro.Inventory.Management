@@ -27,18 +27,44 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                 var builder = fixture.Build<Product>();
                 int[] idRange = Enumerable.Range(1, 10).ToArray();
                 var products = idRange.Select(x => builder.With(a => a.Id, x).Create()).ToList();
-                products.ForEach(x => AddAsync(x));
+                products.ForEach(async x =>
+                {
+                    await AddAsync(x);
+                });
             }
+        }
+
+        public override async Task<Product> AddAsync(Product entity)
+        {
+            await _productContext.Products.AddAsync(entity);
+            await _productContext.SaveChangesAsync();
+            return entity;
+        }
+
+        public override async Task DeleteAsync(Product entity)
+        {
+            _productContext.Products.Remove(entity);
+            await _productContext.SaveChangesAsync();
+        }
+
+        public override async Task<IReadOnlyList<Product>> GetAllAsync() => await _productContext.Products.ToListAsync();
+
+        public override async Task<Product> GetByIdAsync(int id) => await _productContext.Products.FindAsync(id);
+
+        public override async Task UpdateAsync(Product entity)
+        {
+            _productContext.Set<Product>().Update(entity);
+            await _productContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Set<Product>().Where(x => x.Type==type).ToListAsync();
 
-        public async Task<int?> AddAuxItemAsync(AuxilliaryItem entity)
+        public async Task<AuxilliaryItem> AddAuxItemAsync(AuxilliaryItem entity)
         {
             var product = await GetByIdAsync(entity.ProductId);
             product.AuxilliaryItems.Add(entity);
             await UpdateAsync(product);
-            return product.Id;
+            return entity;
         }
 
         public async Task<int?> DeleteAuxItemAsync(AuxilliaryItem entity)

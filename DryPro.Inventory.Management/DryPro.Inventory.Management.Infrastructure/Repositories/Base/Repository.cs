@@ -15,24 +15,24 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories.Base
             _productContext = productContext;
         }
 
-        public async Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             await _productContext.Set<T>().AddAsync(entity);
             await _productContext.SaveChangesAsync();
             return entity;
         }
 
-        public async Task DeleteAsync(T entity)
+        public virtual async Task DeleteAsync(T entity)
         {
             _productContext.Set<T>().Remove(entity);
             await _productContext.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync() => await _productContext.Set<T>().ToListAsync();
+        public virtual async Task<IReadOnlyList<T>> GetAllAsync() => await _productContext.Set<T>().ToListAsync();
 
-        public async Task<T> GetByIdAsync(int id) => await _productContext.Set<T>().FindAsync(id);
+        public virtual async Task<T> GetByIdAsync(int id) => await _productContext.Set<T>().FindAsync(id);
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             _productContext.Set<T>().Update(entity);
             await _productContext.SaveChangesAsync();
