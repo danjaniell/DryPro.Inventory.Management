@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DryPro.Inventory.Management.Common.Enums;
 using AutoFixture;
 using System;
+using DryPro.Inventory.Management.Common.Extensions;
 
 namespace DryPro.Inventory.Management.Infrastructure.Repositories
 {
@@ -62,9 +63,12 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
         public async Task<AuxilliaryItem> AddAuxItemAsync(AuxilliaryItem entity)
         {
             var product = await GetByIdAsync(entity.ProductId);
-            product.AuxilliaryItems.Add(entity);
-            await UpdateAsync(product);
-            return entity;
+            if (product.AuxilliaryItems.AddIfUnique(entity))
+            {
+                await UpdateAsync(product);
+                return entity;
+            }
+            return null;
         }
 
         public async Task<int?> DeleteAuxItemAsync(AuxilliaryItem entity)
