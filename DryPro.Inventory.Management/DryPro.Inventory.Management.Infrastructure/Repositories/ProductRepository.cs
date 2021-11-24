@@ -88,7 +88,12 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
         public async Task<int?> UpdateAuxItemAsync(AuxilliaryItem entity)
         {
             var product = await GetByIdAsync(entity.ProductId);
-            product.AuxilliaryItems.Remove(entity);
+            int index = product.AuxilliaryItems.IndexOf(entity);
+            bool found = (index != -1);
+            if (found)
+            {
+                product.AuxilliaryItems[index] = entity;
+            }
             await UpdateAsync(product);
             return product.Id;
         }
