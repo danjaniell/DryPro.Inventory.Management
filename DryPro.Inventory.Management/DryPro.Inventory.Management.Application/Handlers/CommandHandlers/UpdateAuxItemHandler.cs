@@ -2,6 +2,7 @@
 using DryPro.Inventory.Management.Application.Mappers;
 using DryPro.Inventory.Management.Core.Repositories;
 using MediatR;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
         {
             var auxItemEntity = AuxItemMapper.Mapper.Map<Core.Entities.AuxilliaryItem>(request);
 
-            var auxItem = await _productRepo.GetByIdAsync(auxItemEntity.Id);
+            var auxItem = (await _productRepo.GetAllAuxItemsAsync(auxItemEntity.ProductId)).Single(x => x.Id == auxItemEntity.Id);
 
             if (auxItem is null)
             {

@@ -6,6 +6,7 @@ using DryPro.Inventory.Management.Core.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
 {
@@ -21,14 +22,14 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
         public async Task<int?> Handle(DeleteAuxilliaryItemCommand request, CancellationToken cancellationToken)
         {
             var auxItemEntity = AuxItemMapper.Mapper.Map<Core.Entities.AuxilliaryItem>(request);
-            var auxItem = await _productRepo.GetByIdAsync(auxItemEntity.Id);
+            var auxItem = (await _productRepo.GetAllAuxItemsAsync(auxItemEntity.ProductId)).Single(x=> x.Id == auxItemEntity.Id);
 
             if (auxItem is null)
             {
                 return null;
             }
 
-            await _productRepo.DeleteAsync(auxItem);
+            await _productRepo.DeleteAuxItemAsync(auxItem);
             return auxItem.Id;
         }
     }
