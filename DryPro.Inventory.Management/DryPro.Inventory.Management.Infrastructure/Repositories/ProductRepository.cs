@@ -33,24 +33,34 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Set<Product>().Where(x => x.Type==type).ToListAsync();
 
-        public Task<AuxilliaryItem> AddAuxItemAsync(AuxilliaryItem entity)
+        public async Task<int?> AddAuxItemAsync(AuxilliaryItem entity)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(entity.ProductId);
+            product.AuxilliaryItems.Add(entity);
+            await UpdateAsync(product);
+            return product.Id;
         }
 
-        public Task DeleteAuxItemAsync(AuxilliaryItem entity)
+        public async Task<int?> DeleteAuxItemAsync(AuxilliaryItem entity)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(entity.ProductId);
+            product.AuxilliaryItems.Remove(entity);
+            await UpdateAsync(product);
+            return product.Id;
         }
 
-        public Task<AuxilliaryItem> GetAuxItemByIdAsync(int id)
+        public async Task<IEnumerable<AuxilliaryItem>> GetAllAuxItemsAsync(int productId)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(productId);
+            return product.AuxilliaryItems;
         }
 
-        public Task UpdateAuxItemAsync(AuxilliaryItem entity)
+        public async Task<int?> UpdateAuxItemAsync(AuxilliaryItem entity)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(entity.ProductId);
+            product.AuxilliaryItems.Remove(entity);
+            await UpdateAsync(product);
+            return product.Id;
         }
     }
 }

@@ -9,13 +9,12 @@ namespace DryPro.Inventory.Management.Core.Repositories
     {
         Task<IEnumerable<Entities.Product>> GetProductByType(ProductType type);
 
-        Task<Entities.AuxilliaryItem> AddAuxItemAsync(Entities.AuxilliaryItem entity);
+        Task<int?> AddAuxItemAsync(Entities.AuxilliaryItem entity);
 
-        Task DeleteAuxItemAsync(Entities.AuxilliaryItem entity);
+        Task<int?> DeleteAuxItemAsync(Entities.AuxilliaryItem entity);
 
-        Task<Entities.AuxilliaryItem> GetAuxItemByIdAsync(int id);
+        Task<IEnumerable<Entities.AuxilliaryItem>> GetAllAuxItemsAsync(int productId);
 
-        Task UpdateAuxItemAsync(Entities.AuxilliaryItem entity);
-
+        Task<int?> UpdateAuxItemAsync(Entities.AuxilliaryItem entity);
     }
 }

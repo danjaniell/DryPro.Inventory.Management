@@ -28,8 +28,8 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             }
 
             var newAuxItem = await _productRepo.AddAuxItemAsync(auxItemEntity);
-            var productResponse = AuxItemMapper.Mapper.Map<AuxilliaryItemResponse>(newAuxItem);
-            return productResponse;
+            var auxItemResponse = AuxItemMapper.Mapper.Map<AuxilliaryItemResponse>(newAuxItem);
+            return auxItemResponse;
         }
     }
 }
