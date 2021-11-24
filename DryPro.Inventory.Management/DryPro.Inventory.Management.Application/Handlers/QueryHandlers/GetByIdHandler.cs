@@ -4,6 +4,7 @@ using DryPro.Inventory.Management.Core.Repositories;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using DryPro.Inventory.Management.Application.Queries.Product;
 
 namespace DryPro.Inventory.Management.Application.Handlers.QueryHandlers
 {

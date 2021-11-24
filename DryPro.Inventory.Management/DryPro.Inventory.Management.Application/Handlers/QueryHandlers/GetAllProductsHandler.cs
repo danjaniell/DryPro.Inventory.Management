@@ -1,4 +1,4 @@
-﻿using DryPro.Inventory.Management.Application.Queries;
+﻿using DryPro.Inventory.Management.Application.Queries.Product;
 using MediatR;
 using DryPro.Inventory.Management.Core.Repositories;
 using System.Collections.Generic;

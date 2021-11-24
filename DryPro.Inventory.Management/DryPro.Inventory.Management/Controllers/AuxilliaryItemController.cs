@@ -1,5 +1,6 @@
 ﻿using DryPro.Inventory.Management.Application.Commands;
-using DryPro.Inventory.Management.Application.Queries.Product;
+using DryPro.Inventory.Management.Application.Queries;
+using DryPro.Inventory.Management.Application.Queries.AuxilliaryItem;
 using DryPro.Inventory.Management.Application.Responses;
 using DryPro.Inventory.Management.Common.Enums;
 using MediatR;
@@ -12,40 +13,32 @@ namespace DryPro.Inventory.Management.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class AuxilliaryItemController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ProductController(IMediator mediator)
+        public AuxilliaryItemController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpPost("Add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)
+        public async Task<ActionResult<AuxilliaryItemResponse>> CreateAuxilliaryItem([FromBody] CreateAuxilliaryItemCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
-        [HttpGet("GetAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Product>> GetAllProducts() => await _mediator.Send(new GetAllProductsQuery());
-
-        [HttpGet("GetByType/{{type}}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Product>> GetByType([FromQuery] ProductType type) => await _mediator.Send(new GetByTypeQuery() { Type = type });
-
         [HttpGet("Get/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<Core.Entities.Product> GetById([FromRoute] int id) => (Core.Entities.Product)(await _mediator.Send(new GetByIdQuery() { Id = id }));
+        public async Task<Core.Entities.AuxilliaryItem> GetById([FromRoute] int id) => await _mediator.Send(new GetByIdQuery() { Id = id });
 
         [HttpPost("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<int?>> UpdateProduct([FromBody] UpdateProductCommand command)
+        public async Task<ActionResult<int?>> UpdateAuxilliaryItem([FromBody] UpdateAuxilliaryItemCommand command)
         {
             var result = await _mediator.Send(command);
             if (result is null)
@@ -58,9 +51,9 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpPost("Delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<int?>> DeleteProduct([FromRoute] int id)
+        public async Task<ActionResult<int?>> DeleteAuxilliaryItem([FromRoute] int id)
         {
-            var result = await _mediator.Send(new DeleteProductCommand() { Id = id });
+            var result = await _mediator.Send(new DeleteAuxilliaryItemCommand() { Id = id });
             if (result is null)
             {
                 return NoContent();

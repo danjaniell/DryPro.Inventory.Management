@@ -8,6 +8,8 @@ namespace DryPro.Inventory.Management.Core.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [ForeignKey("ProductId")]
+        public int ProductId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }

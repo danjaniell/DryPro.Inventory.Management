@@ -8,5 +8,14 @@ namespace DryPro.Inventory.Management.Core.Repositories
     public interface IProductRepository : IRepository<Entities.Product>
     {
         Task<IEnumerable<Entities.Product>> GetProductByType(ProductType type);
+
+        Task<Entities.AuxilliaryItem> AddAuxItemAsync(Entities.AuxilliaryItem entity);
+
+        Task DeleteAuxItemAsync(Entities.AuxilliaryItem entity);
+
+        Task<Entities.AuxilliaryItem> GetAuxItemByIdAsync(int id);
+
+        Task UpdateAuxItemAsync(Entities.AuxilliaryItem entity);
+
     }
 }

@@ -32,5 +32,25 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
         }
 
         public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Set<Product>().Where(x => x.Type==type).ToListAsync();
+
+        public Task<AuxilliaryItem> AddAuxItemAsync(AuxilliaryItem entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAuxItemAsync(AuxilliaryItem entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AuxilliaryItem> GetAuxItemByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAuxItemAsync(AuxilliaryItem entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

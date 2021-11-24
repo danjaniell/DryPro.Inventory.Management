@@ -2,7 +2,7 @@
 using MediatR;
 using System.Collections.Generic;
 
-namespace DryPro.Inventory.Management.Application.Queries
+namespace DryPro.Inventory.Management.Application.Queries.Product
 {
     public class GetByTypeQuery : IRequest<List<Core.Entities.Product>>
     {
