@@ -48,12 +48,12 @@ namespace DryPro.Inventory.Management.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Delete/{id}")]
+        [HttpPost("Delete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<int?>> DeleteAuxilliaryItem([FromRoute] int id)
+        public async Task<ActionResult<int?>> DeleteAuxilliaryItem([FromBody] DeleteAuxilliaryItemCommand command)
         {
-            var result = await _mediator.Send(new DeleteAuxilliaryItemCommand() { Id = id });
+            var result = await _mediator.Send(command);
             if (result is null)
             {
                 return NoContent();
