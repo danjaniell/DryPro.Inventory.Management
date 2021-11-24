@@ -53,11 +53,11 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
 
         public override async Task UpdateAsync(Product entity)
         {
-            _productContext.Set<Product>().Update(entity);
+            _productContext.Products.Update(entity);
             await _productContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Set<Product>().Where(x => x.Type==type).ToListAsync();
+        public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => await _productContext.Products.Where(x => x.Type==type).ToListAsync();
 
         public async Task<AuxilliaryItem> AddAuxItemAsync(AuxilliaryItem entity)
         {
