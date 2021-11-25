@@ -60,5 +60,10 @@ namespace DryPro.Inventory.Management.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("GetTotalCost/fromProduct/{productId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<decimal> GetTotalCost([FromRoute] int productId) => await _mediator.Send(new GetTotalCostQuery(productId));
     }
 }

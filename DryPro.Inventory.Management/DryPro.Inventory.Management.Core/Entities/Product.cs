@@ -16,6 +16,6 @@ namespace DryPro.Inventory.Management.Core.Entities
         public decimal SoldPrice { get; set; }
         public decimal Cost { get; set; }
         public decimal Discount { get; set; }
-        public IList<AuxilliaryItem> AuxilliaryItems { get; set; }
+        public IList<AuxilliaryItem> AuxilliaryItems { get; set; } = new List<AuxilliaryItem>();
     }
 }
