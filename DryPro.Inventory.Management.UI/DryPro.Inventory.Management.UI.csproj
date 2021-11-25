@@ -16,8 +16,4 @@
     <ProjectReference Include="..\DryPro.Inventory.Management\DryPro.Inventory.Management.Core\DryPro.Inventory.Management.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\AuxItem\" />
-  </ItemGroup>
-
 </Project>

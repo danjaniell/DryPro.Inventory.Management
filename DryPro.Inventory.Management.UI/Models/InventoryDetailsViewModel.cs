@@ -9,8 +9,5 @@ namespace DryPro.Inventory.Management.UI.Models
     {
         [BindProperty]
         public Product Product { get; set; }
-
-        [BindProperty]
-        public int Count { get; set; } = 1;
     }
 }

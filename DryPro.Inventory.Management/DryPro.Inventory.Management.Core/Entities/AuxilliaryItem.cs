@@ -12,8 +12,8 @@ namespace DryPro.Inventory.Management.Core.Entities
         [ForeignKey("ProductId")]
         public int ProductId { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
         public decimal Cost { get; set; }
+        public string Description { get; set; }
 
         public bool Equals(AuxilliaryItem other) => this.Id == other.Id;
     }

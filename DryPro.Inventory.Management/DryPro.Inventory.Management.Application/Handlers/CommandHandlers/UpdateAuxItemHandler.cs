@@ -29,7 +29,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             }
 
             await _productRepo.UpdateAuxItemAsync(auxItemEntity);
-            return auxItem.Id;
+            return auxItem.ProductId;
         }
     }
 }

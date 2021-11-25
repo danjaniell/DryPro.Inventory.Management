@@ -1,0 +1,37 @@
+﻿@model IEnumerable<DryPro.Inventory.Management.Core.Entities.AuxilliaryItem>
+@{
+    ViewData["Title"] = "Details";
+}
+<div>
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var auxItem in Model)
+            {
+                <tr>
+                    <td width="30%">@auxItem.Name</td>
+                    <td width="10%">@auxItem.Cost</td>
+                    <td width="50%">@auxItem.Description</td>
+                    <td width="10%" class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-controller="AuxItem" 
+                               asp-route-productId="@auxItem.ProductId" 
+                               asp-route-Id="@auxItem.Id" 
+                               asp-route-Name="@auxItem.Name" 
+                               asp-route-Cost="@auxItem.Cost" 
+                               asp-route-Description="@auxItem.Description" 
+                               class="btn btn-secondary w-100">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

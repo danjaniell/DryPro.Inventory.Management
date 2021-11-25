@@ -15,10 +15,13 @@ namespace DryPro.Inventory.Management.UI.Controllers
     public class InventoryController : Controller
     {
         private readonly InventoryCreateViewModel _inventoryCreateViewModel;
+        private readonly InventoryDetailsViewModel _inventoryDetailsViewModel;
 
-        public InventoryController(InventoryCreateViewModel inventoryCreateViewModel)
+        public InventoryController(InventoryCreateViewModel inventoryCreateViewModel,
+                                   InventoryDetailsViewModel inventoryDetailsViewModel)
         {
             _inventoryCreateViewModel = inventoryCreateViewModel;
+            _inventoryDetailsViewModel = inventoryDetailsViewModel;
         }
 
         public async Task<IActionResult> Index()
@@ -35,7 +38,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(products);
         }
 
-        // GET: Product/Create
+        // GET: Inventory/Create
         public IActionResult Create()
         {
             return View(_inventoryCreateViewModel);
@@ -66,7 +69,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return RedirectToAction(nameof(Create));
         }
 
-        // GET: Product/Details/5
+        // GET: Inventory/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id is null)
@@ -81,6 +84,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     result = JsonConvert.DeserializeObject<Product>(apiResponse);
+                    _inventoryDetailsViewModel.Product = result;
                 }
             }
             if (result is null)
@@ -88,10 +92,10 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 return NotFound();
             }
 
-            return View(result);
+            return View(_inventoryDetailsViewModel);
         }
 
-        // GET: Product/Edit/5
+        // GET: Inventory/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -114,7 +118,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(product);
         }
 
-        // POST: Product/Edit/5
+        // POST: Inventory/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UpdateProductCommand command)
@@ -136,7 +140,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(result);
         }
 
-        // GET: Product/Delete/5
+        // GET: Inventory/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null)
@@ -162,7 +166,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(product);
         }
 
-        // POST: Product/Delete/5
+        // POST: Inventory/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)

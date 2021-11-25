@@ -28,6 +28,7 @@ namespace DryPro.Inventory.Management.UI
         {
             services.AddControllersWithViews();
             services.AddSingleton<InventoryCreateViewModel>();
+            services.AddSingleton<InventoryDetailsViewModel>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
