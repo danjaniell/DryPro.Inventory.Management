@@ -14,11 +14,11 @@ namespace DryPro.Inventory.Management.UI.Controllers
 {
     public class InventoryController : Controller
     {
-        private readonly CreateProductViewModel _createProductViewModel;
+        private readonly InventoryCreateViewModel _inventoryCreateViewModel;
 
-        public InventoryController(CreateProductViewModel createProductViewModel)
+        public InventoryController(InventoryCreateViewModel inventoryCreateViewModel)
         {
-            _createProductViewModel = createProductViewModel;
+            _inventoryCreateViewModel = inventoryCreateViewModel;
         }
 
         public async Task<IActionResult> Index()
@@ -38,7 +38,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         // GET: Product/Create
         public IActionResult Create()
         {
-            return View(_createProductViewModel);
+            return View(_inventoryCreateViewModel);
         }
 
         [HttpPost]

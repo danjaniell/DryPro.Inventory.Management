@@ -9,12 +9,6 @@ namespace DryPro.Inventory.Management.UI.Controllers
 {
     public class AuxItemController : Controller
     {
-        // GET: AuxItemController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         // GET: AuxItemController/Details/5
         public ActionResult Details(int id)
         {
