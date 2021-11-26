@@ -76,30 +76,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="add-auxItem" tabindex="-1" role="dialog" aria-labelledby="addAuxItem">
-    <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
-        <div class="modal-content">
-            <div class="modal-header" style="background:#d9534f;color:white;">
-                <h4 class="modal-title" id="add-auxItem">
-                    Add Auxilliary Item
-                </h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            <partial name="../AuxItem/Create.cshtml" for="@auxilliaryItems" />
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-success" value="Add" onclick="AddAuxItem()" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+<partial name="../AuxItem/Create.cshtml" for="@auxilliaryItems" />
 
 @section Scripts {
     <script type="text/javascript">
