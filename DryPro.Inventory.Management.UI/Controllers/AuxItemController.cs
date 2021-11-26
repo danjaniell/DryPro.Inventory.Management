@@ -21,16 +21,10 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View();
         }
 
-        // GET: AuxItem/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: AuxItem/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(IFormCollection collection)
         {
             try
             {
