@@ -16,6 +16,6 @@ namespace DryPro.Inventory.Management.Application.Handlers.QueryHandlers
             _productRepo = productRepository;
         }
 
-        public async Task<List<Core.Entities.AuxilliaryItem>> Handle(GetAllAuxItemsQuery request, CancellationToken cancellationToken) => (List<Core.Entities.AuxilliaryItem>)await _productRepo.GetAllAuxItemsAsync(request.Id);
+        public async Task<List<Core.Entities.AuxilliaryItem>> Handle(GetAllAuxItemsQuery request, CancellationToken cancellationToken) => (List<Core.Entities.AuxilliaryItem>)await _productRepo.GetAllAuxItemsAsync(request.ProductId);
     }
 }

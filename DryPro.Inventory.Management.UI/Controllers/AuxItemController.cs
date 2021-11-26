@@ -79,25 +79,42 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(auxItem);
         }
 
-        // GET: AuxItem/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        // GET: AuxItem/Delete/5?productId=1
+        //public IActionResult Delete(int productId, int id, string name, decimal cost, string description)
+        //{
+        //    var auxItem = new AuxilliaryItem()
+        //    {
+        //        ProductId = productId,
+        //        Id = id,
+        //        Name = name,
+        //        Cost = cost,
+        //        Description = description
+        //    };
+        //    return View(auxItem);
+        //}
 
-        // POST: AuxItem/Delete/5
+        // POST: AuxItem/Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(string auxItemJson)
         {
-            try
+            var auxItem = JsonConvert.DeserializeObject<AuxilliaryItem>(auxItemJson);
+            int? result = null;
+            var command = AuxItemMapper.Mapper.Map<UpdateAuxilliaryItemCommand>(auxItem);
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                HttpContent request = HttpContentHelper.CreateRequest(command);
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.PostAsync("https://localhost:5001/api/AuxilliaryItem/Delete", request))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        result = JsonConvert.DeserializeObject<int>(apiResponse); //should be the product Id
+                    }
+                }
+                return RedirectToAction("Details", "Inventory", new { id = result });
             }
-            catch
-            {
-                return View();
-            }
+            return View(auxItem);
         }
     }
 }

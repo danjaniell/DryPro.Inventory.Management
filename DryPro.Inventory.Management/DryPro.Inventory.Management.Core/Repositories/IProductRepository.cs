@@ -15,6 +15,8 @@ namespace DryPro.Inventory.Management.Core.Repositories
 
         Task<IEnumerable<Entities.AuxilliaryItem>> GetAllAuxItemsAsync(int productId);
 
+        Task<Entities.AuxilliaryItem> GetAuxItemByIdAsync(int productId, int id);
+
         Task<decimal> GetCostOfAllAuxItemsAsync(int productId);
 
         Task<int?> UpdateAuxItemAsync(Entities.AuxilliaryItem entity);

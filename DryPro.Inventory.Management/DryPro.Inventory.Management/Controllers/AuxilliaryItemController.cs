@@ -35,6 +35,11 @@ namespace DryPro.Inventory.Management.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<List<Core.Entities.AuxilliaryItem>> GetAllAuxItems([FromRoute] int productId) => await _mediator.Send(new GetAllAuxItemsQuery(productId));
 
+        [HttpGet("Get/fromProduct/{productId}/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<Core.Entities.AuxilliaryItem> GetById([FromRoute] int productId, [FromRoute] int id) => await _mediator.Send(new GetByIdQuery(productId) {Id = id});
+
         [HttpPost("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

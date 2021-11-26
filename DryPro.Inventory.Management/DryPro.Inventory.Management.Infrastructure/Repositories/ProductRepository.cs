@@ -85,6 +85,12 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             return product.AuxilliaryItems;
         }
 
+        public async Task<AuxilliaryItem> GetAuxItemByIdAsync(int productId, int id)
+        {
+            var product = await GetByIdAsync(productId);
+            return product.AuxilliaryItems.Single(x=>x.Id == id);
+        }
+
         public async Task<decimal> GetCostOfAllAuxItemsAsync(int productId)
         {
             var product = await GetByIdAsync(productId);

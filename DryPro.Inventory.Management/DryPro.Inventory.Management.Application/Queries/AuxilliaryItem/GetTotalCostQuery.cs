@@ -6,9 +6,9 @@ namespace DryPro.Inventory.Management.Application.Queries.AuxilliaryItem
     {
         public GetTotalCostQuery(int productId)
         {
-            Id = productId;
+            ProductId = productId;
         }
 
-        public int Id { get; }
+        public int ProductId { get; }
     }
 }
