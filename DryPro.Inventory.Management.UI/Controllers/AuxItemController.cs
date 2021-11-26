@@ -26,15 +26,10 @@ namespace DryPro.Inventory.Management.UI.Controllers
         [Route("[controller]/Create")]
         public async Task<IActionResult> Create(IFormCollection collection)
         {
-            var x = collection["name"];
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var auxItems = JsonConvert.DeserializeObject<List<AuxilliaryItem>>(collection["auxItems"]);
+            //Add item retrieved from form to list
+            //Validate that there's no duplicates
+            //Return updated list
         }
 
         // GET: AuxItem/Edit/5?productId=1

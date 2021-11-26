@@ -84,8 +84,6 @@
     }
 
     var DeleteItem = function () {
-        var auxItemId = $("#hiddenAuxItemId").val();
-        var productId = $("#hiddenProductId").val();
         $.ajax({
             url: '@Url.Action("Delete", "AuxItem")',
             type: 'POST',

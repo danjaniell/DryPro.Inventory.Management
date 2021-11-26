@@ -1,8 +1,11 @@
 ﻿@model DryPro.Inventory.Management.UI.Models.InventoryCreateViewModel
 @using DryPro.Inventory.Management.Common.Enums
+@using DryPro.Inventory.Management.Core.Entities
+@using Newtonsoft.Json;
 
 @{
     ViewData["Title"] = "Create";
+    var auxilliaryItems = new List<AuxilliaryItem>();
 }
 
 
@@ -52,7 +55,7 @@
                 <span asp-validation-for="Product.Discount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <a href="#add-auxItem" class="btn-sm btn-secondary w-100" onclick="OpenAddAuxItemDialog('name1','cost1','desc1')">Add Auxilliary Item</a>
+                <a href="#add-auxItem" class="btn-sm btn-secondary w-100" onclick="OpenAddAuxItemDialog(`@JsonConvert.SerializeObject(auxilliaryItems)`)">Add Auxilliary Item</a>
             </div>
             <div class="form-group">
                 <label asp-for="Count" class="control-label"></label>
@@ -85,7 +88,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-10">
-                            <partial name="../AuxItem/Create.cshtml" for="@Model.Product.AuxilliaryItems" />
+                            <partial name="../AuxItem/Create.cshtml" for="@auxilliaryItems" />
                         </div>
                     </div>
                 </div>
@@ -98,29 +101,21 @@
     </div>
 </div>
 
-<input type="hidden" id="hiddenAuxItemName" />
-<input type="hidden" id="hiddenAuxItemCost" />
-<input type="hidden" id="hiddenAuxItemDesc" />
-
 @section Scripts {
     <script type="text/javascript">
-        var OpenAddAuxItemDialog = function (name, cost, desc) {
-            $("#hiddenAuxItemName").val(name);
-            $("#hiddenAuxItemCost").val(cost);
-            $("#hiddenAuxItemDesc").val(desc);
+        var _auxilliaryItems;
+
+        var OpenAddAuxItemDialog = function (auxilliaryItems) {
+            _auxilliaryItems = auxilliaryItems;
             $("#add-auxItem").modal('show');
         }
 
         var AddAuxItem = function () {
-            var name = $("#hiddenAuxItemName").val();
-            var cost = $("#hiddenAuxItemCost").val();
-            var desc = $("#hiddenAuxItemDesc").val();
-            console.log(name + " " + cost + " " + desc);
             $.ajax({
                 url: '@Url.Action("Create", "AuxItem")',
                 type: 'POST',
                 cache: false,
-                data: { name: name, cost: cost, desc: desc },
+                data: { auxItems: _auxilliaryItems },
                 success: function (results) {
                     $("#add-auxItem").modal('hide');
                     document.location.reload(true);
