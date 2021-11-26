@@ -96,7 +96,7 @@
             data: { productId: productId, auxItemId: auxItemId },
             success: function (results) {
                 $("#delete-confirmation").modal('hide');
-                //REFRESH TABLE TO REMOVE FROM VIEW
+                document.location.reload(true);
             }
         });
     }
