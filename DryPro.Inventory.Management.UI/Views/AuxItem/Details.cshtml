@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DryPro.Inventory.Management.Core.Entities.AuxilliaryItem>
-@using Newtonsoft.Json;
+@*@using Newtonsoft.Json;*@
 @{
- ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details";
 }
 <div>
     <table class="table table-bordered table-striped" style="width:100%">
@@ -29,7 +29,8 @@
                                asp-route-Cost="@auxItem.Cost"
                                asp-route-Description="@auxItem.Description"
                                class="btn btn-secondary w-100">Edit</a>
-                            <a href="#delete-confirmation" class="btn btn-danger mx-1" onclick="ConfirmDelete(@JsonConvert.SerializeObject(auxItem))">Delete</a>
+                            @*<a href="#delete-confirmation" class="btn btn-danger mx-1" onclick="ConfirmDelete(@JsonConvert.SerializeObject(auxItem))">Delete</a>*@
+                            <a href="#delete-confirmation" class="btn btn-danger mx-1" onclick="ConfirmDelete(`@auxItem.Id`,`@auxItem.ProductId`)">Delete</a>
                             @*<a asp-action="Delete" asp-controller="AuxItem"
                                 asp-route-productId="@auxItem.ProductId"
                                 asp-route-Id="@auxItem.Id"
@@ -74,29 +75,28 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    var _auxItem;
+<input type="hidden" id="hiddenAuxItemId" />
+<input type="hidden" id="hiddenProductId" />
 
-    var ConfirmDelete = function (auxItem) {
-        _auxItem = JSON.stringify(auxItem);
-        console.log(_auxItem);
+<script type="text/javascript">
+
+    var ConfirmDelete = function (auxItemId, productId) {
+        $("#hiddenAuxItemId").val(auxItemId);
+        $("#hiddenProductId").val(productId);
         $("#delete-confirmation").modal('show');
     }
 
     var DeleteItem = function () {
-        console.log(_auxItem);
+        var auxItemId = $("#hiddenAuxItemId").val();
+        var productId = $("#hiddenProductId").val();
         $.ajax({
-            url: '@Url.Action("Delete", "AuxItem")',
+            url: '@Url.Action("Delete", "AuxItem")/' + auxItemId + '/fromProduct=' + productId,
             type: 'POST',
             cache: false,
-            data: { 'auxItemJson': _auxItem },
+            data: { productId: productId, auxItemId: auxItemId },
             success: function (results) {
-                alert(results);
-                $("#delete-confirmation").modal("hide");
-                $("#row_" + auxItemId).remove();
-            },
-            error: function () {
-                alert('Error occured');
+                $("#delete-confirmation").modal('hide');
+                //REFRESH TABLE TO REMOVE FROM VIEW
             }
         });
     }

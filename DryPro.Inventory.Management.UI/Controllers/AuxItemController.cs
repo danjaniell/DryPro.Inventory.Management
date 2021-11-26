@@ -94,13 +94,16 @@ namespace DryPro.Inventory.Management.UI.Controllers
         //}
 
         // POST: AuxItem/Delete
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(string auxItemJson)
+        [Route("[controller]/Delete/{id}/fromProduct={productId}")]
+        public async Task<IActionResult> Delete([FromRoute]int productId, [FromRoute]int id)
         {
-            var auxItem = JsonConvert.DeserializeObject<AuxilliaryItem>(auxItemJson);
+            var auxItem = new AuxilliaryItem()
+            {
+                ProductId = productId,
+                Id = id
+            };
             int? result = null;
-            var command = AuxItemMapper.Mapper.Map<UpdateAuxilliaryItemCommand>(auxItem);
+            var command = AuxItemMapper.Mapper.Map<DeleteAuxilliaryItemCommand>(auxItem);
             if (ModelState.IsValid)
             {
                 HttpContent request = HttpContentHelper.CreateRequest(command);
