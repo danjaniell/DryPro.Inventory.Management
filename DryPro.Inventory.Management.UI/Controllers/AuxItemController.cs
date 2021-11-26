@@ -23,9 +23,10 @@ namespace DryPro.Inventory.Management.UI.Controllers
 
         // POST: AuxItem/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Route("[controller]/Create")]
         public async Task<IActionResult> Create(IFormCollection collection)
         {
+            var x = collection["name"];
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -88,14 +89,11 @@ namespace DryPro.Inventory.Management.UI.Controllers
         //}
 
         // POST: AuxItem/Delete
-        [Route("[controller]/Delete/{id}/fromProduct={productId}")]
-        public async Task<IActionResult> Delete([FromRoute]int productId, [FromRoute]int id)
+        [HttpPost]
+        [Route("[controller]/Delete")]
+        public async Task<IActionResult> Delete(IFormCollection collection)
         {
-            var auxItem = new AuxilliaryItem()
-            {
-                ProductId = productId,
-                Id = id
-            };
+            var auxItem = JsonConvert.DeserializeObject<AuxilliaryItem>(collection["auxItemJson"]);
             int? result = null;
             var command = AuxItemMapper.Mapper.Map<DeleteAuxilliaryItemCommand>(auxItem);
             if (ModelState.IsValid)
