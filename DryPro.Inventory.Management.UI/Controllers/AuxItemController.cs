@@ -48,6 +48,8 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 _auxItemCreateViewModel.AuxilliaryItems.Add(auxItem);
             }
             //Modify _inventoryCreateViewModel to retain current state of other fields
+            //Option 1: Get value (json?) parse to Product, reassign the value to _inventoryCreateViewModel
+            //Option 2: Separate the view into 2 partials. Return partial only for the aux item create view.
             return RedirectToAction("Create", "Inventory");
         }
 
