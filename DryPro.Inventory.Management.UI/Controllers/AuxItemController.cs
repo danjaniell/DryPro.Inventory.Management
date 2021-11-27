@@ -30,6 +30,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             //Add item retrieved from form to list
             //Validate that there's no duplicates
             //Return updated list
+            return View();
         }
 
         // GET: AuxItem/Edit/5?productId=1

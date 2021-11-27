@@ -1,13 +1,13 @@
-﻿@model IEnumerable<DryPro.Inventory.Management.Core.Entities.AuxilliaryItem>
-@{
+﻿@model DryPro.Inventory.Management.UI.Models.AuxItemCreateViewModel;
+@{ 
     ViewData["Title"] = "Create";
-    var auxItem = new DryPro.Inventory.Management.Core.Entities.AuxilliaryItem();
+    Model.Current = new DryPro.Inventory.Management.Core.Entities.AuxilliaryItem();
 }
 
 <div class="modal fade" id="add-auxItem" tabindex="-1" role="dialog" aria-labelledby="addAuxItem">
     <div class="modal-dialog" style="width:501px !important;margin:0 auto;">
         <div class="modal-content">
-            <div class="modal-header" style="background:#d9534f;color:white;">
+            <div class="modal-header" style="background: #01A1EC; color: white;">
                 <h4 class="modal-title" id="add-auxItem">
                     Add Auxilliary Item
                 </h4>
@@ -21,19 +21,19 @@
                                     <form asp-action="Create">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="form-group">
-                                            <label asp-for="@auxItem.Name" class="control-label"></label>
-                                            <input asp-for="@auxItem.Name" class="form-control" />
-                                            <span asp-validation-for="@auxItem.Name" class="text-danger"></span>
+                                            <label asp-for="Current.Name" class="control-label"></label>
+                                            <input asp-for="Current.Name" class="form-control" />
+                                            <span asp-validation-for="Current.Name" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="@auxItem.Cost" class="control-label"></label>
-                                            <input asp-for="@auxItem.Cost" class="form-control" />
-                                            <span asp-validation-for="@auxItem.Cost" class="text-danger"></span>
+                                            <label asp-for="Current.Cost" class="control-label"></label>
+                                            <input asp-for="Current.Cost" class="form-control" />
+                                            <span asp-validation-for="Current.Cost" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <label asp-for="@auxItem.Description" class="control-label"></label>
-                                            <input asp-for="@auxItem.Description" class="form-control" />
-                                            <span asp-validation-for="@auxItem.Description" class="text-danger"></span>
+                                            <label asp-for="Current.Description" class="control-label"></label>
+                                            <input asp-for="Current.Description" class="form-control" />
+                                            <span asp-validation-for="Current.Description" class="text-danger"></span>
                                         </div>
                                     </form>
                                 </div>
@@ -50,6 +50,27 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    var _auxilliaryItems;
+
+    var InitCreateAuxItem = function (auxilliaryItems) {
+        _auxilliaryItems = auxilliaryItems;
+        $("#add-auxItem").modal('show');
+    }
+
+    var AddAuxItem = function () {
+        $.ajax({
+            url: '@Url.Action("Create", "AuxItem")',
+            type: 'POST',
+            cache: false,
+            data: { auxItems: _auxilliaryItems },
+            success: function (results) {
+                $("#add-auxItem").modal('hide');
+                document.location.reload(true);
+            }
+        });
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
