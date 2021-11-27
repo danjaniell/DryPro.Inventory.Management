@@ -2,6 +2,7 @@
 using DryPro.Inventory.Management.Application.Mappers;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
+using DryPro.Inventory.Management.UI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,6 +16,16 @@ namespace DryPro.Inventory.Management.UI.Controllers
 {
     public class AuxItemController : Controller
     {
+        private readonly AuxItemCreateViewModel _auxItemCreateViewModel;
+        private readonly InventoryCreateViewModel _inventoryCreateViewModel;
+
+        public AuxItemController(AuxItemCreateViewModel auxItemCreateViewModel, 
+                                 InventoryCreateViewModel inventoryCreateViewModel)
+        {
+            _auxItemCreateViewModel = auxItemCreateViewModel;
+            _inventoryCreateViewModel = inventoryCreateViewModel;
+        }
+
         // GET: AuxItem/Details/5
         public ActionResult Details(int id)
         {
@@ -26,11 +37,18 @@ namespace DryPro.Inventory.Management.UI.Controllers
         [Route("[controller]/Create")]
         public async Task<IActionResult> Create(IFormCollection collection)
         {
-            var auxItems = JsonConvert.DeserializeObject<List<AuxilliaryItem>>(collection["auxItems"]);
-            //Add item retrieved from form to list
-            //Validate that there's no duplicates
-            //Return updated list
-            return View();
+            if (ModelState.IsValid)
+            {
+                var auxItem = new AuxilliaryItem()
+                {
+                    Name = collection["name"],
+                    Cost = decimal.Parse(collection["cost"]),
+                    Description = collection["description"],
+                };
+                _auxItemCreateViewModel.AuxilliaryItems.Add(auxItem);
+            }
+            //Modify _inventoryCreateViewModel to retain current state of other fields
+            return RedirectToAction("Create", "Inventory");
         }
 
         // GET: AuxItem/Edit/5?productId=1

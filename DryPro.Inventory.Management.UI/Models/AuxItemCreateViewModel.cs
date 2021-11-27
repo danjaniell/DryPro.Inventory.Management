@@ -8,7 +8,7 @@ namespace DryPro.Inventory.Management.UI.Models
 {
     public class AuxItemCreateViewModel
     {
-        public IEnumerable<Core.Entities.AuxilliaryItem> AuxilliaryItems { get; set; } = new List<Core.Entities.AuxilliaryItem>();
+        public IList<Core.Entities.AuxilliaryItem> AuxilliaryItems { get; set; } = new List<Core.Entities.AuxilliaryItem>();
 
         public AuxilliaryItem Current { get; set; }
     }

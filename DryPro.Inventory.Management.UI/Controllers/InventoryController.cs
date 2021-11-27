@@ -49,6 +49,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         public async Task<IActionResult> Create(int count, Product product)
         {
             Product result = null;
+            product.AuxilliaryItems = _inventoryCreateViewModel.AuxItemCreateViewModel.AuxilliaryItems;
             if (ModelState.IsValid)
             {
                 var command = ProductMapper.Mapper.Map<CreateProductCommand>(product);

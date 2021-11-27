@@ -22,17 +22,17 @@
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="form-group">
                                             <label asp-for="Current.Name" class="control-label"></label>
-                                            <input asp-for="Current.Name" class="form-control" />
+                                            <input id="auxItemName" class="form-control" />
                                             <span asp-validation-for="Current.Name" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="Current.Cost" class="control-label"></label>
-                                            <input asp-for="Current.Cost" class="form-control" />
+                                            <input id="auxItemCost" class="form-control" />
                                             <span asp-validation-for="Current.Cost" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="Current.Description" class="control-label"></label>
-                                            <input asp-for="Current.Description" class="form-control" />
+                                            <input id="auxItemDesc" class="form-control" />
                                             <span asp-validation-for="Current.Description" class="text-danger"></span>
                                         </div>
                                     </form>
@@ -43,6 +43,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-success" value="Add" onclick="AddAuxItem()" />
+                    @*<a asp-controller="AuxItem" asp-action="Create" class="btn btn-success">Add</a>*@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -55,15 +56,17 @@
 
     var InitCreateAuxItem = function (auxilliaryItems) {
         _auxilliaryItems = auxilliaryItems;
-        $("#add-auxItem").modal('show');
     }
 
     var AddAuxItem = function () {
+        var name = $("#auxItemName").val();
+        var cost = $("#auxItemCost").val();
+        var desc = $("#auxItemDesc").val();
         $.ajax({
             url: '@Url.Action("Create", "AuxItem")',
             type: 'POST',
             cache: false,
-            data: { auxItems: _auxilliaryItems },
+            data: { auxItems: _auxilliaryItems, name: name, cost: cost, description: desc },
             success: function (results) {
                 $("#add-auxItem").modal('hide');
                 document.location.reload(true);
