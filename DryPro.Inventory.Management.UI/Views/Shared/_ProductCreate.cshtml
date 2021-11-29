@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var Current = new DryPro.Inventory.Management.Core.Entities.Product();
 }
 
 
@@ -20,7 +21,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select id="productType" asp-for="Type" asp-items="Html.GetEnumSelectList<ProductType>()" class="form-control" onchange="OnPropertyChanged()">
+                <select id="productType" asp-for="@Current.Type" asp-items="Html.GetEnumSelectList<ProductType>()" class="form-control" onchange="OnPropertyChanged()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger"></span>
@@ -100,28 +101,21 @@
 
 <script type="text/javascript">
     function OnPropertyChanged() {
-        @Model.Current.Type = $("#productType").val();
-        @Model.Current.Color = $("#productColor").val();
-        @Model.Current.SellingPrice = $("#productSellingPrice").val();
-        @Model.Current.SoldPrice = $("#productSoldPrice").val();
-        @Model.Current.Cost = $("#productCost").val();
-        @Model.Current.Discount = $("#productDiscount").val();
-        @Model.Count = $("#createCount").val();
-        //var type = $("#productType").val();
-        //var color = $("#productColor").val();
-        //var sellingPrice = $("#productSellingPrice").val();
-        //var soldPrice = $("#productSoldPrice").val();
-        //var cost = $("#productCost").val();
-        //var discount = $("#productDiscount").val();
-        //var createCount = $("#createCount").val();
+        var type = $("#productType").val();
+        var color = $("#productColor").val();
+        var sellingPrice = $("#productSellingPrice").val();
+        var soldPrice = $("#productSoldPrice").val();
+        var cost = $("#productCost").val();
+        var discount = $("#productDiscount").val();
+        var createCount = $("#createCount").val();
+        var data = {
+            type: type, color: color, sellingPrice: sellingPrice, soldPrice: soldPrice, cost: cost, discount: discount
+        };
         $.ajax({
             url: '@Url.Action("SaveToViewModel", "Inventory")',
             type: 'POST',
             cache: false,
-            data: { data: @Model },
-            success: function (results) {
-                document.location.reload(true);
-            }
+            data: { data: JSON.stringify(data), createCount: createCount}
         });
     }
 </script>

@@ -194,15 +194,15 @@ namespace DryPro.Inventory.Management.UI.Controllers
         [HttpPost]
         public IActionResult SaveToViewModel(IFormCollection collection)
         {
-            var data = collection["data"];
             try
             {
-                _inventoryCreateViewModel.Type = (ProductType)(int.Parse(collection["type"]));
-                _inventoryCreateViewModel.Color = (ProductColor)(int.Parse(collection["color"]));
-                _inventoryCreateViewModel.SellingPrice = decimal.Parse(collection["sellingPrice"]);
-                _inventoryCreateViewModel.SoldPrice = decimal.Parse(collection["soldPrice"]);
-                _inventoryCreateViewModel.Cost = decimal.Parse(collection["cost"]);
-                _inventoryCreateViewModel.Discount = decimal.Parse(collection["discount"]);
+                var product = JsonConvert.DeserializeObject<Product>(collection["data"]);
+                _inventoryCreateViewModel.Type = product.Type;
+                _inventoryCreateViewModel.Color = product.Color;
+                _inventoryCreateViewModel.SellingPrice = product.SellingPrice;
+                _inventoryCreateViewModel.SoldPrice = product.SoldPrice;
+                _inventoryCreateViewModel.Cost = product.Cost;
+                _inventoryCreateViewModel.Discount = product.Discount;
                 _inventoryCreateViewModel.Count = int.Parse(collection["createCount"]);
                 return Ok();
             }
