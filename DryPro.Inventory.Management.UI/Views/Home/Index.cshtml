@@ -1,8 +1,116 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "DryPro";
 }
+<script>
+    <link rel="stylesheet" href="~/css/home_carousel.css" />
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <h2>Products</h2>
+        </div>
+        <div class="col-4">
+            <h3>Bath Towels</h3>
+            <div>
+                <div class="row align-items-center">
+                    <div class="" id="slider">
+                        <div id="myCarousel" class="carousel slide shadow">
+                            <div class="carousel-inner">
+                                <div class="active carousel-item" data-slide-number="0">
+                                    <a href="https://shopee.ph/DryPro-Microfiber-Bath-Towel-Gray-i.477341406.11139778713" target="_blank">
+                                        <img src="~/img/gray.jpg" class="img-fluid" asp-append-version="true">
+                                    </a>
+                                </div>
+                                <div class="carousel-item" data-slide-number="1">
+                                    <a href="https://shopee.ph/DryPro-Microfiber-Bath-Travel-Towel-Blue-i.477341406.11939785091" target="_blank">
+                                        <img src="~/img/blue.jpg" class="img-fluid" asp-append-version="true">
+                                    </a>
+                                </div>
+                                <div class="carousel-item" data-slide-number="2">
+                                    <a href="https://shopee.ph/DryPro-Microfiber-Bath-Travel-Towel-Blush-Pink-i.477341406.10339782258" target="_blank">
+                                        <img src="~/img/pink.jpg" class="img-fluid" asp-append-version="true">
+                                    </a>
+                                </div>
+                                <div class="carousel-item" data-slide-number="3">
+                                    <a href="https://shopee.ph/DryPro-Microfiber-Bath-Travel-Towel-Purple-i.477341406.10939786148" target="_blank">
+                                        <img src="~/img/purple.jpg" class="img-fluid" asp-append-version="true">
+                                    </a>
+                                </div>
+                                <div class="carousel-item" data-slide-number="4">
+                                    <a href="https://shopee.ph/DryPro-Microfiber-Bath-Travel-Towel-Red-i.477341406.11039779506" target="_blank">
+                                        <img src="~/img/red.jpg" class="img-fluid" asp-append-version="true">
+                                    </a>
+                                </div>
+                                <div class="carousel-item" data-slide-number="5">
+                                    <a href="https://shopee.ph/DryPro-Microfiber-Bath-Travel-Towel-Yellow-i.477341406.10239775405" target="_blank">
+                                        <img src="~/img/yellow.jpg" class="img-fluid" asp-append-version="true">
+                                    </a>
+                                </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+                                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h3>Hand Towels</h3>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+                    <a href="https://shopee.ph/DryPro-Microfiber-Hand-Sports-Towel-Gray-i.477341406.10639732650">
+                        <img src="~/img/hand_gray.jpg"
+                             class="w-100 shadow-1-strong rounded mb-4"
+                             asp-append-version="true"
+                             alt="" />
+                    </a>
+
+                    <a href="https://shopee.ph/DryPro-Microfiber-Hand-Towel-Blue-i.477341406.10539733599">
+                        <img src="~/img/hand_blue.jpg"
+                             class="w-100 shadow-1-strong rounded mb-4"
+                             asp-append-version="true"                             
+                             alt="" />
+                    </a>
+                </div>
+
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <a href="https://shopee.ph/DryPro-Microfiber-Hand-Towel-Blush-Pink-i.477341406.11239724566">
+                        <img src="~/img/hand_pink.jpg"
+                             class="w-100 shadow-1-strong rounded mb-4"
+                             asp-append-version="true"                             
+                             alt="" />
+                    </a>
+
+                    <a href="https://shopee.ph/DryPro-Microfiber-Hand-Towel-Purple-i.477341406.10639731659">
+                        <img src="~/img/hand_purple.jpg"
+                             class="w-100 shadow-1-strong rounded mb-4"
+                             asp-append-version="true"                             
+                             alt="" />
+                    </a>
+                </div>
+
+                <div class="col-lg-4 mb-4 mb-lg-0">
+
+                    <a href="https://shopee.ph/DryPro-Microfiber-Hand-Towel-Red-i.477341406.10739735284">
+                        <img src="~/img/hand_red.jpg"
+                             class="w-100 shadow-1-strong rounded mb-4"
+                             asp-append-version="true"                             
+                             alt="" />
+                    </a>
+
+                    <a href="https://shopee.ph/DryPro-Microfiber-Hand-Towel-Yellow-i.477341406.10039726440">
+                        <img src="~/img/hand_yellow.jpg"
+                             class="w-100 shadow-1-strong rounded mb-4"
+                             asp-append-version="true"                             
+                             alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
