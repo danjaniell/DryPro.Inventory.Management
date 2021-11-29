@@ -50,31 +50,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    var _auxilliaryItems;
-
-    var InitCreateAuxItem = function (auxilliaryItems) {
-        _auxilliaryItems = auxilliaryItems;
-    }
-
-    var AddAuxItem = function () {
-        var name = $("#auxItemName").val();
-        var cost = $("#auxItemCost").val();
-        var desc = $("#auxItemDesc").val();
-        $.ajax({
-            url: '@Url.Action("Create", "AuxItem")',
-            type: 'POST',
-            cache: false,
-            data: { auxItems: _auxilliaryItems, name: name, cost: cost, description: desc },
-            success: function (results) {
-                $("#add-auxItem").modal('hide');
-                document.location.reload(true);
-            }
-        });
-    }
-</script>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
