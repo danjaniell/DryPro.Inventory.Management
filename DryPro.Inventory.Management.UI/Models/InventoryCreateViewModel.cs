@@ -28,5 +28,6 @@ namespace DryPro.Inventory.Management.UI.Models
         [BindProperty]
         public int Count { get; set; } = 1;
         public AuxItemCreateViewModel AuxItemCreateViewModel { get; }
+        public Product Current { get; set; } = new Product();
     }
 }

@@ -6,10 +6,11 @@
 
 
 <partial name="_ProductCreate" for="@Model" />
-<partial name="_AuxItemCreate" for="@Model.AuxItemCreateViewModel" />
+<div id="divPartial">
+    <partial name="_AuxItemCreate" for="@Model.AuxItemCreateViewModel" />
+</div>
 
 @section Scripts {
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 <script type="text/javascript">
     var _auxilliaryItems;
 
@@ -33,9 +34,12 @@
             data: { auxItems: _auxilliaryItems, name: name, cost: cost, description: desc },
             success: function (results) {
                 $("#add-auxItem").modal('hide');
+                $('#divPartial').html(results);
+                $('#divPartial').show();
                 document.location.reload(true);
             }
         });
     }
 </script>
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

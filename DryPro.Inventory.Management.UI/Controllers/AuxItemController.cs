@@ -50,7 +50,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             //Modify _inventoryCreateViewModel to retain current state of other fields
             //Option 1: Get value (json?) parse to Product, reassign the value to _inventoryCreateViewModel
             //Option 2: Separate the view into 2 partials. Return partial only for the aux item create view.
-            return RedirectToAction("Create", "Inventory");
+            return PartialView("_AuxItemCreate", _auxItemCreateViewModel);
         }
 
         // GET: AuxItem/Edit/5?productId=1

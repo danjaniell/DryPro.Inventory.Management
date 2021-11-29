@@ -1,8 +1,10 @@
 ﻿using DryPro.Inventory.Management.Application.Commands;
 using DryPro.Inventory.Management.Application.Mappers;
+using DryPro.Inventory.Management.Common.Enums;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
 using DryPro.Inventory.Management.UI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -187,6 +189,27 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult SaveToViewModel(IFormCollection collection)
+        {
+            var data = collection["data"];
+            try
+            {
+                _inventoryCreateViewModel.Type = (ProductType)(int.Parse(collection["type"]));
+                _inventoryCreateViewModel.Color = (ProductColor)(int.Parse(collection["color"]));
+                _inventoryCreateViewModel.SellingPrice = decimal.Parse(collection["sellingPrice"]);
+                _inventoryCreateViewModel.SoldPrice = decimal.Parse(collection["soldPrice"]);
+                _inventoryCreateViewModel.Cost = decimal.Parse(collection["cost"]);
+                _inventoryCreateViewModel.Discount = decimal.Parse(collection["discount"]);
+                _inventoryCreateViewModel.Count = int.Parse(collection["createCount"]);
+                return Ok();
+            }
+            catch
+            {
+                return NoContent();
+            }
         }
     }
 }
