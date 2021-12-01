@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - DryPro.Inventory.Management.UI</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-                <ul class="navbar-nav mr-auto">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2 d-flex justify-content-sm-start">
+                <ul class="navbar-nav mr-sm-auto">
                     <li class="nav-item active">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
@@ -23,16 +24,18 @@
                     </li>
                 </ul>
             </div>
+
             <div class="mx-auto order-0">
-                <a class="navbar-brand mx-auto" href="#">DryPro Inventory</a>
+                <a class="navbar-brand mx-lg-auto  d-flex justify-content-lg-between" href="#">DryPro Inventory</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="dropdown nav-item">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Log In <span class="caret"></span></a>
+
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-text d-flex justify-content-sm-end">
+                <ul class="navbar-nav ml-sm-auto">
+                    <li class="dropdown dropdown-header">
+                        <a href="#" class="dropdown-toggle nav-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Log In <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="nav-link btn btn-primary text-white" type="button" href="#" data-toggle="modal" data-target="#myModal">Sign In</a>
@@ -50,7 +53,7 @@
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <h4 class="modal-title">Customer Sign In</h4>
+                            <h4 class="modal-title">Sign In</h4>
                             <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
 
