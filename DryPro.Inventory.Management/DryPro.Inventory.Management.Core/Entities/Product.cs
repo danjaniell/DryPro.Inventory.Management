@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace DryPro.Inventory.Management.Core.Entities
 {
@@ -15,6 +16,7 @@ namespace DryPro.Inventory.Management.Core.Entities
         public decimal SellingPrice { get; set; }
         public decimal SoldPrice { get; set; }
         public decimal Cost { get; set; }
+        public decimal TotalCost => Cost + AuxilliaryItems.Sum(x => x.Cost);
         public decimal Discount { get; set; }
         public IList<AuxilliaryItem> AuxilliaryItems { get; set; } = new List<AuxilliaryItem>();
     }
