@@ -14,13 +14,21 @@
             <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2 d-flex justify-content-sm-start">
                 <ul class="navbar-nav mr-sm-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Inventory" asp-action="Index">Manage</a>
+                        <a class="nav-link" asp-controller="Inventory" asp-action="Index"><i class="fas fa-warehouse"></i></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a>
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-friends"></i></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="https://www.instagram.com/dryprotowels/" class="link-dark stretched-link page-link"><i class="fab fa-instagram"></i> Instagram</a>
+                            </li>
+                            <li>
+                                <a href="https://shopee.ph/dry.pro" class="link-dark stretched-link page-link"><i class="fas fa-shopping-cart"></i> Shopee</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -35,7 +43,7 @@
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-text d-flex justify-content-sm-end">
                 <ul class="navbar-nav ml-sm-auto">
                     <li class="dropdown dropdown-header">
-                        <a href="#" class="dropdown-toggle nav-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Log In <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle nav-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-lock"></i></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="nav-link btn btn-primary text-white" type="button" href="#" data-toggle="modal" data-target="#myModal">Sign In</a>
@@ -97,7 +105,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - DryPro.Inventory.Management.UI - <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+            &copy; 2021 - DryPro.Inventory.Management.UI
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
