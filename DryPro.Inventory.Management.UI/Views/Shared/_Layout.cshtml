@@ -42,60 +42,46 @@
 
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-text d-flex justify-content-sm-end">
                 <ul class="navbar-nav ml-sm-auto">
-                    <li class="dropdown dropdown-header">
-                        <a href="#" class="dropdown-toggle nav-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-lock"></i></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="nav-link btn btn-primary text-white" type="button" href="#" data-toggle="modal" data-target="#myModal">Sign In</a>
-                            </li>
-                            <li>
-                                <a class="nav-link btn btn-danger text-white" type="button" href="#" data-toggle="modal" data-target="#myModal">Register</a>
-                            </li>
-                        </ul>
+                    <li class="dropdown nav-item">
+                        <a href="#" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#myModal"><i class="fas fa-user-lock"></i></a>
                     </li>
                 </ul>
             </div>
-
-            <div class="modal" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-                            <h4 class="modal-title">Sign In</h4>
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                        </div>
-
-                        <div class="modal-body">
-                            <form>
-                                <label class="sr-only" for="usrname">Username</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-
-
-                                <label class="sr-only" for="Password">Name</label>
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-key"></i></span>
-                                    </div>
-                                    <input id="Password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2">
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Sign In</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
         </nav>
     </header>
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Sign In</h4>
+                    <button type="button" class="btn" data-dismiss="modal"><i class="far fa-window-close"></i></button>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <label class="sr-only" for="usrname">Username</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <label class="sr-only" for="Password">Name</label>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text" id="basic-addon2"><i class="fa fa-key"></i></span>
+                            <input id="Password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <main role="main" class="pb-3">
