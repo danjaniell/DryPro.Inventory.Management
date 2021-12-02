@@ -30,9 +30,11 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                 if ((await GetAllAsync()).Count == 0)
                 {
                     var fixture = new Fixture();
-                    var builder = fixture.Build<Product>();
                     int[] idRange = Enumerable.Range(1, 10).ToArray();
-                    var products = idRange.Select(x => builder.With(a => a.Id, x.ToString()).Create()).ToList();
+                    var productBuilder = fixture.Build<Product>();
+                    var auxItemBuilder = fixture.Build<AuxilliaryItem>();
+                    var auxItems = idRange.Select(x => auxItemBuilder.With(b => b.ProductId, x).Create());
+                    var products = idRange.Select(x => productBuilder.With(a => a.Id, x.ToString()).With(b=> b.AuxilliaryItems, auxItems.Where(b=>b.ProductId == x).ToList()).Create()).ToList();
                     products.ForEach(async x =>
                     {
                         await AddAsync(x);
