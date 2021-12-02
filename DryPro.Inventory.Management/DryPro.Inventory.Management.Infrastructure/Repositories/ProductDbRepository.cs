@@ -33,7 +33,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                     int[] idRange = Enumerable.Range(1, 10).ToArray();
                     var productBuilder = fixture.Build<Product>();
                     var auxItemBuilder = fixture.Build<AuxilliaryItem>();
-                    var auxItems = idRange.Select(x => auxItemBuilder.With(b => b.ProductId, x).Create());
+                    var auxItems = idRange.SelectMany(x => auxItemBuilder.With(b => b.ProductId, x).CreateMany());
                     var products = idRange.Select(x => productBuilder.With(a => a.Id, x.ToString()).With(b=> b.AuxilliaryItems, auxItems.Where(b=>b.ProductId == x).ToList()).Create()).ToList();
                     products.ForEach(async x =>
                     {
