@@ -15,12 +15,12 @@ namespace DryPro.Inventory.Management.Core.Entities
         [BsonId]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
-        public int Guid
+        public string _Id { get; set; }
+        public int Id
         {
             get
             {
-                if (!int.TryParse(Id, out _guid)) { return 0; }
+                if (!int.TryParse(_Id, out _guid)) { return 0; }
                 return _guid;
             }
             set

@@ -27,7 +27,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                 var fixture = new Fixture();
                 var builder = fixture.Build<Product>();
                 int[] idRange = Enumerable.Range(1, 10).ToArray();
-                var products = idRange.Select(x => builder.With(a => a.Guid, x).Create()).ToList();
+                var products = idRange.Select(x => builder.With(a => a.Id, x).Create()).ToList();
                 products.ForEach(async x =>
                 {
                     await AddAsync(x);
@@ -76,7 +76,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             var product = await GetByIdAsync(entity.ProductId);
             product.AuxilliaryItems.Remove(entity);
             await UpdateAsync(product);
-            return product.Guid;
+            return product.Id;
         }
 
         public async Task<IEnumerable<AuxilliaryItem>> GetAllAuxItemsAsync(int productId)
@@ -107,7 +107,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                 product.AuxilliaryItems[index] = entity;
             }
             await UpdateAsync(product);
-            return product.Guid;
+            return product.Id;
         }
 
         public async Task<string> ClearAllAndGenerateRandomData()
@@ -120,7 +120,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                     var fixture = new Fixture();
                     var builder = fixture.Build<Product>();
                     int[] idRange = Enumerable.Range(1, 10).ToArray();
-                    var products = idRange.Select(x => builder.With(a => a.Id, x.ToString()).Create()).ToList();
+                    var products = idRange.Select(x => builder.With(a => a._Id, x.ToString()).Create()).ToList();
                     products.ForEach(async x =>
                     {
                         await AddAsync(x);
@@ -136,9 +136,9 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
 
         public async Task DeleteAll()
         {
-            foreach (var id in _productContext.Products.Select(e => e.Guid))
+            foreach (var id in _productContext.Products.Select(e => e.Id))
             {
-                var entity = new Product { Guid = id };
+                var entity = new Product { Id = id };
                 _productContext.Products.Attach(entity);
                 _productContext.Products.Remove(entity);
             }

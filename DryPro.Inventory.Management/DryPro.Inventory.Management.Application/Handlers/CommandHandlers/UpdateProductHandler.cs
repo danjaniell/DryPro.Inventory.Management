@@ -22,7 +22,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
         {
             var productEntity = ProductMapper.Mapper.Map<Core.Entities.Product>(request);
 
-            var product = await _productRepo.GetByIdAsync(productEntity.Guid);
+            var product = await _productRepo.GetByIdAsync(productEntity.Id);
 
             if (product is null)
             {
@@ -30,7 +30,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             }
 
             await _productRepo.UpdateAsync(productEntity);
-            return product.Guid;
+            return product.Id;
         }
     }
 }

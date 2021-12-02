@@ -67,6 +67,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                         }
                     }
                 }
+                _inventoryCreateViewModel.Clear();
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Create));

@@ -34,7 +34,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                     var productBuilder = fixture.Build<Product>();
                     var auxItemBuilder = fixture.Build<AuxilliaryItem>();
                     var auxItems = idRange.SelectMany(x => auxItemBuilder.With(b => b.ProductId, x).CreateMany());
-                    var products = idRange.Select(x => productBuilder.With(a => a.Id, x.ToString()).With(b=> b.AuxilliaryItems, auxItems.Where(b=>b.ProductId == x).ToList()).Create()).ToList();
+                    var products = idRange.Select(x => productBuilder.With(a => a._Id, x.ToString()).With(b=> b.AuxilliaryItems, auxItems.Where(b=>b.ProductId == x).ToList()).Create()).ToList();
                     products.ForEach(async x =>
                     {
                         await AddAsync(x);
@@ -67,14 +67,14 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             return null;
         }
 
-        public async Task DeleteAsync(Product entity) => await _products.DeleteOneAsync(x => x.Guid == entity.Guid);
+        public async Task DeleteAsync(Product entity) => await _products.DeleteOneAsync(x => x.Id == entity.Id);
 
         public async Task<int?> DeleteAuxItemAsync(AuxilliaryItem entity)
         {
             var product = await GetByIdAsync(entity.ProductId);
             product.AuxilliaryItems.Remove(entity);
             await UpdateAsync(product);
-            return product.Guid;
+            return product.Id;
         }
 
         public async Task<IReadOnlyList<Product>> GetAllAsync() => (await _products.FindAsync(x => true)).ToList();
@@ -91,7 +91,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             return product.AuxilliaryItems.Single(x => x.Id == id);
         }
 
-        public async Task<Product> GetByIdAsync(int id) => (await _products.FindAsync(x => x.Guid == id)).SingleOrDefault();
+        public async Task<Product> GetByIdAsync(int id) => (await _products.FindAsync(x => x.Id == id)).SingleOrDefault();
 
         public async Task<decimal> GetCostOfAllAuxItemsAsync(int productId)
         {
@@ -101,7 +101,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => (await _products.FindAsync(x => x.Type == type)).ToList();
 
-        public async Task UpdateAsync(Product entity) => await _products.ReplaceOneAsync(x => x.Guid == entity.Guid, entity);
+        public async Task UpdateAsync(Product entity) => await _products.ReplaceOneAsync(x => x.Id == entity.Id, entity);
 
         public async Task<int?> UpdateAuxItemAsync(AuxilliaryItem entity)
         {
@@ -113,7 +113,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                 product.AuxilliaryItems[index] = entity;
             }
             await UpdateAsync(product);
-            return product.Guid;
+            return product.Id;
         }
     }
 }
