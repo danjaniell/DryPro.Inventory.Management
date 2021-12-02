@@ -1,10 +1,12 @@
-﻿using DryPro.Inventory.Management.Common.Enums;
+﻿using AutoFixture;
+using DryPro.Inventory.Management.Common.Enums;
+using DryPro.Inventory.Management.Common.Extensions;
 using DryPro.Inventory.Management.Core.Entities;
 using DryPro.Inventory.Management.Core.Repositories;
 using DryPro.Inventory.Management.Infrastructure.Data;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DryPro.Inventory.Management.Infrastructure.Repositories
@@ -20,53 +22,96 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             _products = database.GetCollection<Product>("Products");
         }
 
+        public async Task<string> ClearAllAndGenerateRandomData()
+        {
+            try
+            {
+                await DeleteAll();
+                if ((await GetAllAsync()).Count == 0)
+                {
+                    var fixture = new Fixture();
+                    var builder = fixture.Build<Product>();
+                    int[] idRange = Enumerable.Range(1, 10).ToArray();
+                    var products = idRange.Select(x => builder.With(a => a.Id, x.ToString()).Create()).ToList();
+                    products.ForEach(async x =>
+                    {
+                        await AddAsync(x);
+                    });
+                }
+                return "Success";
+            }
+            catch
+            {
+                return "Failed";
+            }
+        }
+
+        public async Task DeleteAll() => await _products.DeleteManyAsync(x => true);
+
         public async Task<Product> AddAsync(Product entity)
         {
             await _products.InsertOneAsync(entity);
             return entity;
         }
 
-        public Task<AuxilliaryItem> AddAuxItemAsync(AuxilliaryItem entity)
+        public async Task<AuxilliaryItem> AddAuxItemAsync(AuxilliaryItem entity)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(entity.ProductId);
+            if (product.AuxilliaryItems.AddIfUnique(entity))
+            {
+                await UpdateAsync(product);
+                return entity;
+            }
+            return null;
         }
 
-        public async Task DeleteAsync(Product entity) => await _products.DeleteOneAsync(x => x.Id == entity.Id);
+        public async Task DeleteAsync(Product entity) => await _products.DeleteOneAsync(x => x.Guid == entity.Guid);
 
-        public Task<int?> DeleteAuxItemAsync(AuxilliaryItem entity)
+        public async Task<int?> DeleteAuxItemAsync(AuxilliaryItem entity)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(entity.ProductId);
+            product.AuxilliaryItems.Remove(entity);
+            await UpdateAsync(product);
+            return product.Guid;
         }
 
         public async Task<IReadOnlyList<Product>> GetAllAsync() => (await _products.FindAsync(x => true)).ToList();
 
-        public Task<IEnumerable<AuxilliaryItem>> GetAllAuxItemsAsync(int productId)
+        public async Task<IEnumerable<AuxilliaryItem>> GetAllAuxItemsAsync(int productId)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(productId);
+            return product.AuxilliaryItems;
         }
 
-        public Task<AuxilliaryItem> GetAuxItemByIdAsync(int productId, int id)
+        public async Task<AuxilliaryItem> GetAuxItemByIdAsync(int productId, int id)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(productId);
+            return product.AuxilliaryItems.Single(x => x.Id == id);
         }
 
-        public async Task<Product> GetByIdAsync(int id) => (await _products.FindAsync(x => x.Id == id)).SingleOrDefault();
+        public async Task<Product> GetByIdAsync(int id) => (await _products.FindAsync(x => x.Guid == id)).SingleOrDefault();
 
-        public Task<decimal> GetCostOfAllAuxItemsAsync(int productId)
+        public async Task<decimal> GetCostOfAllAuxItemsAsync(int productId)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(productId);
+            return product.AuxilliaryItems.Sum(x => x.Cost);
         }
 
-        public Task<IEnumerable<Product>> GetProductByType(ProductType type)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Product>> GetProductByType(ProductType type) => (await _products.FindAsync(x => x.Type == type)).ToList();
 
-        public async Task UpdateAsync(Product entity) => await _products.ReplaceOneAsync(x => x.Id == entity.Id, entity);
+        public async Task UpdateAsync(Product entity) => await _products.ReplaceOneAsync(x => x.Guid == entity.Guid, entity);
 
-        public Task<int?> UpdateAuxItemAsync(AuxilliaryItem entity)
+        public async Task<int?> UpdateAuxItemAsync(AuxilliaryItem entity)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(entity.ProductId);
+            int index = product.AuxilliaryItems.IndexOf(entity);
+            bool found = (index != -1);
+            if (found)
+            {
+                product.AuxilliaryItems[index] = entity;
+            }
+            await UpdateAsync(product);
+            return product.Guid;
         }
     }
 }

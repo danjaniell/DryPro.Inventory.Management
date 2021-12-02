@@ -27,7 +27,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                 var fixture = new Fixture();
                 var builder = fixture.Build<Product>();
                 int[] idRange = Enumerable.Range(1, 10).ToArray();
-                var products = idRange.Select(x => builder.With(a => a.Id, x).Create()).ToList();
+                var products = idRange.Select(x => builder.With(a => a.Guid, x).Create()).ToList();
                 products.ForEach(async x =>
                 {
                     await AddAsync(x);
@@ -76,7 +76,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             var product = await GetByIdAsync(entity.ProductId);
             product.AuxilliaryItems.Remove(entity);
             await UpdateAsync(product);
-            return product.Id;
+            return product.Guid;
         }
 
         public async Task<IEnumerable<AuxilliaryItem>> GetAllAuxItemsAsync(int productId)
@@ -107,7 +107,42 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                 product.AuxilliaryItems[index] = entity;
             }
             await UpdateAsync(product);
-            return product.Id;
+            return product.Guid;
+        }
+
+        public async Task<string> ClearAllAndGenerateRandomData()
+        {
+            try
+            {
+                await DeleteAll();
+                if ((await GetAllAsync()).Count == 0)
+                {
+                    var fixture = new Fixture();
+                    var builder = fixture.Build<Product>();
+                    int[] idRange = Enumerable.Range(1, 10).ToArray();
+                    var products = idRange.Select(x => builder.With(a => a.Id, x.ToString()).Create()).ToList();
+                    products.ForEach(async x =>
+                    {
+                        await AddAsync(x);
+                    });
+                }
+                return "Success";
+            }
+            catch
+            {
+                return "Failed";
+            }
+        }
+
+        public async Task DeleteAll()
+        {
+            foreach (var id in _productContext.Products.Select(e => e.Guid))
+            {
+                var entity = new Product { Guid = id };
+                _productContext.Products.Attach(entity);
+                _productContext.Products.Remove(entity);
+            }
+            await _productContext.SaveChangesAsync();
         }
     }
 }

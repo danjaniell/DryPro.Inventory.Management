@@ -50,9 +50,9 @@
             <td width="30%">@((item.SoldPrice - item.Cost).ToString("c"))</td>
             <td class="text-center">
                 <div class="btn-group" role="group">
-                    <a class="btn btn-primary mx-1" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
-                    <a class="btn btn-primary mx-1" asp-action="Edit" asp-route-id="@item.Id"><i class="far fa-edit"></i></a>
-                    <a class="btn btn-danger mx-1" asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt"></i></a>
+                    <a class="btn btn-primary mx-1" asp-action="Details" asp-route-id="@item.Guid"><i class="fas fa-info-circle"></i></a>
+                    <a class="btn btn-primary mx-1" asp-action="Edit" asp-route-id="@item.Guid"><i class="far fa-edit"></i></a>
+                    <a class="btn btn-danger mx-1" asp-action="Delete" asp-route-id="@item.Guid"><i class="far fa-trash-alt"></i></a>
                 </div>
             </td>
         </tr>

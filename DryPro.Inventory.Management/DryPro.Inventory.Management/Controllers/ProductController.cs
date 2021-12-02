@@ -67,5 +67,14 @@ namespace DryPro.Inventory.Management.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPost("DeleteAllAndGenerateRandomData")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteAllAndGenerateRandomData()
+        {
+            var result = await _mediator.Send(new DeleteAllAndGenerateRandomDataCommand());
+            return Ok(result);
+        }
     }
 }

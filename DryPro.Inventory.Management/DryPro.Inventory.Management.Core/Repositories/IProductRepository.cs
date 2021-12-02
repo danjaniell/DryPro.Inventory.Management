@@ -20,5 +20,7 @@ namespace DryPro.Inventory.Management.Core.Repositories
         Task<decimal> GetCostOfAllAuxItemsAsync(int productId);
 
         Task<int?> UpdateAuxItemAsync(Entities.AuxilliaryItem entity);
+
+        Task<string> ClearAllAndGenerateRandomData();
     }
 }

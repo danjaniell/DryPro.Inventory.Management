@@ -47,8 +47,8 @@ namespace DryPro.Inventory.Management
             });
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly);
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IProductRepository, ProductRepository>();
+            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IProductRepository, ProductDbRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

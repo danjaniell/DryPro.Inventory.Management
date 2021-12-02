@@ -21,7 +21,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
         public async Task<int?> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
             var productEntity = ProductMapper.Mapper.Map<Core.Entities.Product>(request);
-            var product = await _productRepo.GetByIdAsync(productEntity.Id);
+            var product = await _productRepo.GetByIdAsync(productEntity.Guid);
 
             if (product is null)
             {
@@ -29,7 +29,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             }
 
             await _productRepo.DeleteAsync(product);
-            return product.Id;
+            return product.Guid;
         }
     }
 }
