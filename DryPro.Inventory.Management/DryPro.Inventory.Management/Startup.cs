@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using System.Globalization;
 using System.Reflection;
 
@@ -31,6 +32,7 @@ namespace DryPro.Inventory.Management
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IMongoClient, MongoClient>(sp => new MongoClient(Configuration.GetConnectionString("InventoryDB")));
             services.AddControllers();
             services.AddDbContext<ProductContext>(options => options.UseInMemoryDatabase(databaseName: "ProductsDB"), ServiceLifetime.Singleton);
             services.AddSwaggerGen(c =>
