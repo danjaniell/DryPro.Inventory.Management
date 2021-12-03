@@ -11,15 +11,15 @@ namespace DryPro.Inventory.Management.Core.Repositories
 
         Task<Entities.AuxilliaryItem> AddAuxItemAsync(Entities.AuxilliaryItem entity);
 
-        Task<int?> DeleteAuxItemAsync(Entities.AuxilliaryItem entity);
+        Task<string> DeleteAuxItemAsync(Entities.AuxilliaryItem entity);
 
-        Task<IEnumerable<Entities.AuxilliaryItem>> GetAllAuxItemsAsync(int productId);
+        Task<IEnumerable<Entities.AuxilliaryItem>> GetAllAuxItemsAsync(string productId);
 
-        Task<Entities.AuxilliaryItem> GetAuxItemByIdAsync(int productId, int id);
+        Task<Entities.AuxilliaryItem> GetAuxItemByIdAsync(string productId, int id);
 
-        Task<decimal> GetCostOfAllAuxItemsAsync(int productId);
+        Task<decimal> GetCostOfAllAuxItemsAsync(string productId);
 
-        Task<int?> UpdateAuxItemAsync(Entities.AuxilliaryItem entity);
+        Task<string> UpdateAuxItemAsync(Entities.AuxilliaryItem entity);
 
         Task<string> ClearAllAndGenerateRandomData();
     }

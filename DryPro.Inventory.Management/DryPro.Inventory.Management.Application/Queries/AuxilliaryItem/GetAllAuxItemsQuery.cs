@@ -5,11 +5,11 @@ namespace DryPro.Inventory.Management.Application.Queries.AuxilliaryItem
 {
     public class GetAllAuxItemsQuery : IRequest<List<Core.Entities.AuxilliaryItem>>
     {
-        public GetAllAuxItemsQuery(int productId)
+        public GetAllAuxItemsQuery(string productId)
         {
             ProductId = productId;
         }
 
-        public int ProductId { get; }
+        public string ProductId { get; }
     }
 }

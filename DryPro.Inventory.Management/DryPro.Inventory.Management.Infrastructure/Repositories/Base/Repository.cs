@@ -30,7 +30,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories.Base
 
         public virtual async Task<IReadOnlyList<T>> GetAllAsync() => await _productContext.Set<T>().ToListAsync();
 
-        public virtual async Task<T> GetByIdAsync(int id) => await _productContext.Set<T>().FindAsync(id);
+        public virtual async Task<T> GetByIdAsync(string id) => await _productContext.Set<T>().FindAsync(id);
 
         public virtual async Task UpdateAsync(T entity)
         {

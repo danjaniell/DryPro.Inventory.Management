@@ -2,7 +2,7 @@
 
 namespace DryPro.Inventory.Management.Application.Commands
 {
-    public class DeleteProductCommand : IRequest<int?>
+    public class DeleteProductCommand : IRequest<string>
     {
         public int Id { get; set; }
     }

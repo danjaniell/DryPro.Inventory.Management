@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
 {
-    public class DeleteAuxItemHandler : IRequestHandler<DeleteAuxilliaryItemCommand, int?>
+    public class DeleteAuxItemHandler : IRequestHandler<DeleteAuxilliaryItemCommand, string>
     {
         private readonly IProductRepository _productRepo;
 
@@ -19,7 +19,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             _productRepo = productRepo;
         }
 
-        public async Task<int?> Handle(DeleteAuxilliaryItemCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(DeleteAuxilliaryItemCommand request, CancellationToken cancellationToken)
         {
             var auxItemEntity = AuxItemMapper.Mapper.Map<Core.Entities.AuxilliaryItem>(request);
             var auxItem = (await _productRepo.GetAllAuxItemsAsync(auxItemEntity.ProductId)).Single(x=> x.Id == auxItemEntity.Id);

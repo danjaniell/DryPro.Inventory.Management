@@ -9,7 +9,7 @@ namespace DryPro.Inventory.Management.Application.Commands
     public class CreateAuxilliaryItemCommand : IRequest<AuxilliaryItemResponse>
     {
         public int Id { get; set; }
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }

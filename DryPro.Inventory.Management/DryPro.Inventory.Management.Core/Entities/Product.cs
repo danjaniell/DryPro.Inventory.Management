@@ -10,23 +10,12 @@ namespace DryPro.Inventory.Management.Core.Entities
 {
     public class Product
     {
-        private int _guid;
-
         [BsonId]
+        [BsonRequired]
+        [BsonRepresentation(BsonType.ObjectId)]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string _Id { get; set; }
-        public int Id
-        {
-            get
-            {
-                if (!int.TryParse(_Id, out _guid)) { return 0; }
-                return _guid;
-            }
-            set
-            {
-            }
-        }
+        public string _id { get; set; }
         public ProductType Type { get; set; }
         public ProductColor Color { get; set; }
         public decimal SellingPrice { get; set; }

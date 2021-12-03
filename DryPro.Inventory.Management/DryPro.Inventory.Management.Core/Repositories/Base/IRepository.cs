@@ -11,7 +11,7 @@ namespace DryPro.Inventory.Management.Core.Repositories.Base
 
         Task<IReadOnlyList<T>> GetAllAsync();
 
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(string id);
 
         Task UpdateAsync(T entity);
     }

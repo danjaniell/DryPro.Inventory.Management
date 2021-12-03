@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
 {
-    public class UpdateAuxItemHandler : IRequestHandler<UpdateAuxilliaryItemCommand, int?>
+    public class UpdateAuxItemHandler : IRequestHandler<UpdateAuxilliaryItemCommand, string>
     {
         private readonly IProductRepository _productRepo;
 
@@ -17,7 +17,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             _productRepo = productRepo;
         }
 
-        public async Task<int?> Handle(UpdateAuxilliaryItemCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(UpdateAuxilliaryItemCommand request, CancellationToken cancellationToken)
         {
             var auxItemEntity = AuxItemMapper.Mapper.Map<Core.Entities.AuxilliaryItem>(request);
 

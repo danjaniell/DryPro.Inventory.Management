@@ -74,7 +74,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         }
 
         // GET: Inventory/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id is null)
             {
@@ -100,7 +100,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         }
 
         // GET: Inventory/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id is null)
             {
@@ -127,7 +127,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UpdateProductCommand command)
         {
-            int? result = null;
+            string result = null;
             if (ModelState.IsValid)
             {
                 HttpContent request = HttpContentHelper.CreateRequest(command);
@@ -136,7 +136,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                     using (var response = await httpClient.PostAsync("https://localhost:5001/api/Product/Update", request))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<int>(apiResponse);
+                        result = JsonConvert.DeserializeObject<string>(apiResponse);
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -145,7 +145,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         }
 
         // GET: Inventory/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id is null)
             {
@@ -173,9 +173,9 @@ namespace DryPro.Inventory.Management.UI.Controllers
         // POST: Inventory/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            int? result = null;
+            string result = null;
             if (ModelState.IsValid)
             {
                 HttpContent request = HttpContentHelper.CreateRequest(id);
@@ -184,7 +184,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                     using (var response = await httpClient.PostAsync($"https://localhost:5001/api/Product/Delete/{id}", request))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<int>(apiResponse);
+                        result = JsonConvert.DeserializeObject<string>(apiResponse);
                     }
                 }
                 return RedirectToAction(nameof(Index));

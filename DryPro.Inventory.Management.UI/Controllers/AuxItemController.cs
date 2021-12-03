@@ -54,7 +54,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         }
 
         // GET: AuxItem/Edit/5?productId=1
-        public IActionResult Edit(int productId, int id, string name, decimal cost, string description)
+        public IActionResult Edit(string productId, int id, string name, decimal cost, string description)
         {
             var auxItem = new AuxilliaryItem()
             {
@@ -72,7 +72,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AuxilliaryItem auxItem)
         {
-            int? result = null;
+            string result = null;
             var command = AuxItemMapper.Mapper.Map<UpdateAuxilliaryItemCommand>(auxItem);
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                     using (var response = await httpClient.PostAsync("https://localhost:5001/api/AuxilliaryItem/Update", request))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<int>(apiResponse); //should be the product Id
+                        result = JsonConvert.DeserializeObject<string>(apiResponse); //should be the product Id
                     }
                 }
                 return RedirectToAction("Details", "Inventory", new { id = result });
@@ -91,7 +91,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         }
 
         // GET: AuxItem/Delete/5?productId=1
-        //public IActionResult Delete(int productId, int id, string name, decimal cost, string description)
+        //public IActionResult Delete(string productId, int id, string name, decimal cost, string description)
         //{
         //    var auxItem = new AuxilliaryItem()
         //    {
@@ -110,7 +110,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         public async Task<IActionResult> Delete(IFormCollection collection)
         {
             var auxItem = JsonConvert.DeserializeObject<AuxilliaryItem>(collection["auxItemJson"]);
-            int? result = null;
+            string result = null;
             var command = AuxItemMapper.Mapper.Map<DeleteAuxilliaryItemCommand>(auxItem);
             if (ModelState.IsValid)
             {
@@ -120,7 +120,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                     using (var response = await httpClient.PostAsync("https://localhost:5001/api/AuxilliaryItem/Delete", request))
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<int>(apiResponse); //should be the product Id
+                        result = JsonConvert.DeserializeObject<string>(apiResponse); //should be the product Id
                     }
                 }
                 return RedirectToAction("Details", "Inventory", new { id = result });

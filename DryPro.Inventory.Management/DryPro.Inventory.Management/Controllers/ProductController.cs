@@ -40,12 +40,12 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpGet("Get/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<Core.Entities.Product> GetById([FromRoute] int id) => (Core.Entities.Product)(await _mediator.Send(new GetByIdQuery() { Id = id }));
+        public async Task<Core.Entities.Product> GetById([FromRoute] string id) => (Core.Entities.Product)(await _mediator.Send(new GetByIdQuery() { Id = id }));
 
         [HttpPost("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<int?>> UpdateProduct([FromBody] UpdateProductCommand command)
+        public async Task<ActionResult<string>> UpdateProduct([FromBody] UpdateProductCommand command)
         {
             var result = await _mediator.Send(command);
             if (result is null)
@@ -58,7 +58,7 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpPost("Delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<int?>> DeleteProduct([FromRoute] int id)
+        public async Task<ActionResult<string>> DeleteProduct([FromRoute] int id)
         {
             var result = await _mediator.Send(new DeleteProductCommand() { Id = id });
             if (result is null)

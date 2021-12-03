@@ -33,17 +33,17 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpGet("Get/fromProduct/{productId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<List<Core.Entities.AuxilliaryItem>> GetAllAuxItems([FromRoute] int productId) => await _mediator.Send(new GetAllAuxItemsQuery(productId));
+        public async Task<List<Core.Entities.AuxilliaryItem>> GetAllAuxItems([FromRoute] string productId) => await _mediator.Send(new GetAllAuxItemsQuery(productId));
 
         [HttpGet("Get/fromProduct/{productId}/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<Core.Entities.AuxilliaryItem> GetById([FromRoute] int productId, [FromRoute] int id) => await _mediator.Send(new GetByIdQuery(productId) {Id = id});
+        public async Task<Core.Entities.AuxilliaryItem> GetById([FromRoute] string productId, [FromRoute] int id) => await _mediator.Send(new GetByIdQuery(productId) {Id = id});
 
         [HttpPost("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<int?>> UpdateAuxilliaryItem([FromBody] UpdateAuxilliaryItemCommand command)
+        public async Task<ActionResult<string>> UpdateAuxilliaryItem([FromBody] UpdateAuxilliaryItemCommand command)
         {
             var result = await _mediator.Send(command);
             if (result is null)
@@ -56,7 +56,7 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpPost("Delete")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<int?>> DeleteAuxilliaryItem([FromBody] DeleteAuxilliaryItemCommand command)
+        public async Task<ActionResult<string>> DeleteAuxilliaryItem([FromBody] DeleteAuxilliaryItemCommand command)
         {
             var result = await _mediator.Send(command);
             if (result is null)
@@ -69,6 +69,6 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpGet("GetTotalCost/fromProduct/{productId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<decimal> GetTotalCost([FromRoute] int productId) => await _mediator.Send(new GetTotalCostQuery(productId));
+        public async Task<decimal> GetTotalCost([FromRoute] string productId) => await _mediator.Send(new GetTotalCostQuery(productId));
     }
 }

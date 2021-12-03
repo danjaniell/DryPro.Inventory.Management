@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DryPro.Inventory.Management.Application.Commands
 {
-    public class UpdateProductCommand : IRequest<int?>
+    public class UpdateProductCommand : IRequest<string>
     {
         [Key]
         public int Id { get; set; }

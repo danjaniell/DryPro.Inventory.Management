@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
 {
-    public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, int?>
+    public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, string>
     {
         private readonly IProductRepository _productRepo;
 
@@ -18,11 +18,11 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             _productRepo = productRepo;
         }
 
-        public async Task<int?> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var productEntity = ProductMapper.Mapper.Map<Core.Entities.Product>(request);
 
-            var product = await _productRepo.GetByIdAsync(productEntity.Id);
+            var product = await _productRepo.GetByIdAsync(productEntity._id);
 
             if (product is null)
             {
@@ -30,7 +30,7 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             }
 
             await _productRepo.UpdateAsync(productEntity);
-            return product.Id;
+            return product._id;
         }
     }
 }

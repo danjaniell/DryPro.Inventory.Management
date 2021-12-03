@@ -4,11 +4,11 @@ namespace DryPro.Inventory.Management.Application.Queries.AuxilliaryItem
 {
     public class GetTotalCostQuery : IRequest<decimal>
     {
-        public GetTotalCostQuery(int productId)
+        public GetTotalCostQuery(string productId)
         {
             ProductId = productId;
         }
 
-        public int ProductId { get; }
+        public string ProductId { get; }
     }
 }
