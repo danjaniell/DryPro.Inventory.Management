@@ -81,8 +81,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 {
                     using (var response = await httpClient.PostAsync("https://localhost:5001/api/AuxilliaryItem/Update", request))
                     {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<string>(apiResponse); //should be the product Id
+                        result = await response.Content.ReadAsStringAsync(); //should be the product Id
                     }
                 }
                 return RedirectToAction("Details", "Inventory", new { id = result });
@@ -119,8 +118,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 {
                     using (var response = await httpClient.PostAsync("https://localhost:5001/api/AuxilliaryItem/Delete", request))
                     {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<string>(apiResponse); //should be the product Id
+                        result = await response.Content.ReadAsStringAsync(); //should be the product Id
                     }
                 }
                 return RedirectToAction("Details", "Inventory", new { id = result });
