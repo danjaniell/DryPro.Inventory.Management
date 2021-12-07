@@ -58,7 +58,7 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpPost("Delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<string>> DeleteProduct([FromRoute] int id)
+        public async Task<ActionResult<string>> DeleteProduct([FromRoute] string id)
         {
             var result = await _mediator.Send(new DeleteProductCommand() { Id = id });
             if (result is null)
