@@ -41,6 +41,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         // GET: Inventory/Create
         public IActionResult Create()
         {
+            _inventoryCreateViewModel.Clear();
             return View(_inventoryCreateViewModel);
         }
 
