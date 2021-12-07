@@ -133,8 +133,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 {
                     using (var response = await httpClient.PostAsync("https://localhost:5001/api/Product/Update", request))
                     {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<string>(apiResponse);
+                        result = await response.Content.ReadAsStringAsync();
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -181,8 +180,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 {
                     using (var response = await httpClient.PostAsync($"https://localhost:5001/api/Product/Delete/{id}", request))
                     {
-                        string apiResponse = await response.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<string>(apiResponse);
+                        result = await response.Content.ReadAsStringAsync();
                     }
                 }
                 return RedirectToAction(nameof(Index));

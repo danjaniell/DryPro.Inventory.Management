@@ -9,8 +9,7 @@ namespace DryPro.Inventory.Management.Application.Commands
 {
     public class UpdateProductCommand : IRequest<string>
     {
-        [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public ProductType Type { get; set; }
         public ProductColor Color { get; set; }
         public decimal SellingPrice { get; set; }
