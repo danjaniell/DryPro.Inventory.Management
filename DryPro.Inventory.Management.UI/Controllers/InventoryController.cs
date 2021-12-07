@@ -1,6 +1,5 @@
 ﻿using DryPro.Inventory.Management.Application.Commands;
 using DryPro.Inventory.Management.Application.Mappers;
-using DryPro.Inventory.Management.Common.Enums;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
 using DryPro.Inventory.Management.UI.Models;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace DryPro.Inventory.Management.UI.Controllers

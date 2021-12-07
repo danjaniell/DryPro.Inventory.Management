@@ -8,7 +8,7 @@ namespace DryPro.Inventory.Management.Application.Commands
 {
     public class CreateProductCommand : IRequest<ProductResponse>
     {
-        public int Id { get; set; }
+        public string _id { get; set; }
         public ProductType Type { get; set; }
         public ProductColor Color { get; set; }
         public decimal SellingPrice { get; set; }

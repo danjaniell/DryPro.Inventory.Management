@@ -4,7 +4,6 @@
 
 @{
     ViewData["Title"] = "Create";
-    var Current = new DryPro.Inventory.Management.Core.Entities.Product();
 }
 
 
@@ -21,7 +20,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select id="productType" asp-for="@Current.Type" asp-items="Html.GetEnumSelectList<ProductType>()" class="form-control" onchange="OnPropertyChanged()">
+                <select id="productType" asp-for="Type" asp-items="Html.GetEnumSelectList<ProductType>()" class="form-control" onchange="OnPropertyChanged()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="Type" class="text-danger"></span>
