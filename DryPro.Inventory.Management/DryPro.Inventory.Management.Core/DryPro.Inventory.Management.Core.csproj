@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DryPro.Inventory.Management.Common\DryPro.Inventory.Management.Common.csproj" />
+    <ProjectReference Include="..\DryPro.Inventory.Management.Common\DryPro.Inventory.Management.Common.csproj" />
   </ItemGroup>
 
 </Project>
