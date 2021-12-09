@@ -2,6 +2,7 @@
 using DryPro.Inventory.Management.Application.Mappers;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
+using DryPro.Inventory.Management.Infrastructure.Data;
 using DryPro.Inventory.Management.UI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,15 @@ namespace DryPro.Inventory.Management.UI.Controllers
     {
         private readonly InventoryCreateViewModel _inventoryCreateViewModel;
         private readonly InventoryDetailsViewModel _inventoryDetailsViewModel;
+        private readonly IEndpoint _ep;
 
         public InventoryController(InventoryCreateViewModel inventoryCreateViewModel,
-                                   InventoryDetailsViewModel inventoryDetailsViewModel)
+                                   InventoryDetailsViewModel inventoryDetailsViewModel,
+                                   IEndpoint ep)
         {
             _inventoryCreateViewModel = inventoryCreateViewModel;
             _inventoryDetailsViewModel = inventoryDetailsViewModel;
+            _ep = ep;
         }
 
         public async Task<IActionResult> Index()
@@ -29,7 +33,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             var products = new List<Product>();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("https://localhost:5001/api/Product/GetAll"))
+                using (var response = await httpClient.GetAsync($"{_ep.Value}/api/Product/GetAll"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     products = JsonConvert.DeserializeObject<List<Product>>(apiResponse);
@@ -59,7 +63,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        using (var response = await httpClient.PostAsync("https://localhost:5001/api/Product/Add", request))
+                        using (var response = await httpClient.PostAsync($"{_ep.Value}/api/Product/Add", request))
                         {
                             string apiResponse = await response.Content.ReadAsStringAsync();
                             result = JsonConvert.DeserializeObject<Product>(apiResponse);
@@ -83,7 +87,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             Product result = null;
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync($"https://localhost:5001/api/Product/Get/{id}"))
+                using (var response = await httpClient.GetAsync($"{_ep.Value}/api/Product/Get/{id}"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     result = JsonConvert.DeserializeObject<Product>(apiResponse);
@@ -108,7 +112,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             Product product = null;
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync($"https://localhost:5001/api/Product/Get/{id}"))
+                using (var response = await httpClient.GetAsync($"{_ep.Value}/api/Product/Get/{id}"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     product = JsonConvert.DeserializeObject<Product>(apiResponse);
@@ -132,7 +136,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 HttpContent request = HttpContentHelper.CreateRequest(command);
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.PostAsync("https://localhost:5001/api/Product/Update", request))
+                    using (var response = await httpClient.PostAsync($"{_ep.Value}/api/Product/Update", request))
                     {
                         result = await response.Content.ReadAsStringAsync();
                     }
@@ -153,7 +157,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
             Product product = null;
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync($"https://localhost:5001/api/Product/Get/{id}"))
+                using (var response = await httpClient.GetAsync($"{_ep.Value}/api/Product/Get/{id}"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     product = JsonConvert.DeserializeObject<Product>(apiResponse);
@@ -179,7 +183,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 HttpContent request = HttpContentHelper.CreateRequest(id);
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.PostAsync($"https://localhost:5001/api/Product/Delete/{id}", request))
+                    using (var response = await httpClient.PostAsync($"{_ep.Value}/api/Product/Delete/{id}", request))
                     {
                         result = await response.Content.ReadAsStringAsync();
                     }

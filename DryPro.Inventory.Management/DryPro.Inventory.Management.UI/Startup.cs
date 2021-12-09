@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Globalization;
 using DryPro.Inventory.Management.UI.Models;
+using Microsoft.Extensions.Options;
+using DryPro.Inventory.Management.Infrastructure.Data;
 
 namespace DryPro.Inventory.Management.UI
 {
@@ -26,6 +28,8 @@ namespace DryPro.Inventory.Management.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Endpoints>(Configuration.GetSection(nameof(Endpoints)));
+            services.AddSingleton<IEndpoint>(x => x.GetRequiredService<IOptions<Endpoints>>().Value);
             services.AddControllersWithViews();
             services.AddSingleton<InventoryCreateViewModel>();
             services.AddSingleton<InventoryDetailsViewModel>();

@@ -4,11 +4,13 @@ namespace DryPro.Inventory.Management.Infrastructure.Data
 {
     public interface IEndpoint
     {
-        KeyValuePair<string, string> Value { get; set; }
+        string Environment { get; set; }
+        string Value { get; set; }
     }
 
     public class Endpoints : IEndpoint
     {
-        public KeyValuePair<string, string> Value { get; set; }
+        public string Environment { get; set; }
+        public string Value { get; set; }
     }
 }

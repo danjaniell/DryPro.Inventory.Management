@@ -1,24 +1,56 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
-    <Configurations>Debug;Release;Test</Configurations>
+	<TargetFramework>net5.0</TargetFramework>
+	<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+	<Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
+	
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<DefineConstants>DEBUG;TRACE</DefineConstants>
+	<EnvironmentName>$(env)</EnvironmentName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|AnyCPU'">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<DefineConstants>DEBUG;TRACE</DefineConstants>
+	<EnvironmentName>$(env)</EnvironmentName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<EnvironmentName>$(env)</EnvironmentName>
+  </PropertyGroup>
+  <ItemGroup>
+	<Content Remove="appsettings.json" />
+	<Content Remove="appsettings.*.json" />
+  </ItemGroup>
+  <ItemGroup>
+	<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+	<Content Include="appsettings.*.json" Exclude="appsettings.$(EnvironmentName).json" DependentUpon="appsettings.json" CopyToOutputDirectory="Never" />
+	<Content Condition="'$(Configuration)|$(Platform)' != 'Debug|AnyCPU'" Include="appsettings.$(EnvironmentName).json" DependentUpon="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  
+  <Target Name="RenameAppsettings" AfterTargets="Publish">
+	<Move SourceFiles="$(PublishDir)\appsettings.$(EnvironmentName).json" DestinationFiles="$(PublishDir)\appsettings.overrides.json" />
+  </Target>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.12" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.12" />
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DryPro.Inventory.Management.Application\DryPro.Inventory.Management.Application.csproj" />
-    <ProjectReference Include="..\DryPro.Inventory.Management.Common\DryPro.Inventory.Management.Common.csproj" />
-    <ProjectReference Include="..\DryPro.Inventory.Management.Core\DryPro.Inventory.Management.Core.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Application\DryPro.Inventory.Management.Application.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Common\DryPro.Inventory.Management.Common.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Core\DryPro.Inventory.Management.Core.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Infrastructure\DryPro.Inventory.Management.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\img\" />
+	<Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>

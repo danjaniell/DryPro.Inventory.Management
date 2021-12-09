@@ -365,3 +365,5 @@ FodyWeavers.xsd
 /DryPro.Inventory.Management/DryPro.Inventory.Management/appsettings.Production.json
 /builds/Test
 /builds/Production
+/DryPro.Inventory.Management/DryPro.Inventory.Management.UI/appsettings.Test.json
+/DryPro.Inventory.Management/DryPro.Inventory.Management.UI/appsettings.Production.json

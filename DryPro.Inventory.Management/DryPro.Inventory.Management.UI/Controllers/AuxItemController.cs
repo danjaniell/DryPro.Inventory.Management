@@ -2,6 +2,7 @@
 using DryPro.Inventory.Management.Application.Mappers;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
+using DryPro.Inventory.Management.Infrastructure.Data;
 using DryPro.Inventory.Management.UI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,12 @@ namespace DryPro.Inventory.Management.UI.Controllers
     public class AuxItemController : Controller
     {
         private readonly AuxItemCreateViewModel _auxItemCreateViewModel;
-        private readonly InventoryCreateViewModel _inventoryCreateViewModel;
+        private readonly IEndpoint _ep;
 
-        public AuxItemController(AuxItemCreateViewModel auxItemCreateViewModel, 
-                                 InventoryCreateViewModel inventoryCreateViewModel)
+        public AuxItemController(AuxItemCreateViewModel auxItemCreateViewModel, IEndpoint ep)
         {
             _auxItemCreateViewModel = auxItemCreateViewModel;
-            _inventoryCreateViewModel = inventoryCreateViewModel;
+            _ep = ep;
         }
 
         // GET: AuxItem/Details/5
@@ -79,7 +79,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 HttpContent request = HttpContentHelper.CreateRequest(command);
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.PostAsync("https://localhost:5001/api/AuxilliaryItem/Update", request))
+                    using (var response = await httpClient.PostAsync($"{_ep.Value}/api/AuxilliaryItem/Update", request))
                     {
                         result = await response.Content.ReadAsStringAsync(); //should be the product Id
                     }
