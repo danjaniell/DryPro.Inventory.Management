@@ -1,27 +1,58 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>12b3ca5a-17a0-475e-8e4e-a1911888ba61</UserSecretsId>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>12b3ca5a-17a0-475e-8e4e-a1911888ba61</UserSecretsId>
+		<DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+		<Configurations>Debug;Release;Test</Configurations>		
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<EnvironmentName>$(env)</EnvironmentName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|AnyCPU'">
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineConstants>DEBUG;TRACE</DefineConstants>
+	  <EnvironmentName>$(env)</EnvironmentName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<EnvironmentName>$(env)</EnvironmentName>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Remove="appsettings.json" />
+		<Content Remove="appsettings.*.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+		<Content Include="appsettings.*.json" Exclude="appsettings.$(EnvironmentName).json" DependentUpon="appsettings.json" CopyToOutputDirectory="Never" />
+		<Content Condition="'$(Configuration)|$(Platform)' != 'Debug|AnyCPU'" Include="appsettings.$(EnvironmentName).json" DependentUpon="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+	<Target Name="RenameAppsettings" AfterTargets="Publish">
+		<Move SourceFiles="$(PublishDir)\appsettings.$(EnvironmentName).json" DestinationFiles="$(PublishDir)\appsettings.overrides.json" />
+	</Target>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.12" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.14.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
+	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+	<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.12" />
+	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+	<PackageReference Include="MongoDB.Driver" Version="2.14.0" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DryPro.Inventory.Management.Application\DryPro.Inventory.Management.Application.csproj" />
-    <ProjectReference Include="..\DryPro.Inventory.Management.Common\DryPro.Inventory.Management.Common.csproj" />
-    <ProjectReference Include="..\DryPro.Inventory.Management.Core\DryPro.Inventory.Management.Core.csproj" />
-    <ProjectReference Include="..\DryPro.Inventory.Management.Infrastructure\DryPro.Inventory.Management.Infrastructure.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Application\DryPro.Inventory.Management.Application.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Common\DryPro.Inventory.Management.Common.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Core\DryPro.Inventory.Management.Core.csproj" />
+	<ProjectReference Include="..\DryPro.Inventory.Management.Infrastructure\DryPro.Inventory.Management.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

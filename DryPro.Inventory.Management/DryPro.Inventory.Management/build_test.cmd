@@ -1,0 +1,1 @@
+dotnet publish "DryPro.Inventory.Management.csproj" -c Release /p:env=Test -o "C:\Users\danjaniell7\source\repos\DryPro.Inventory.Management\builds\Test"
