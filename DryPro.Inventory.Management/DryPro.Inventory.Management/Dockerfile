@@ -27,4 +27,4 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 EXPOSE 5001
 ENV ASPNETCORE_URLS=http://+:5000
-ENTRYPOINT ["dotnet", "DryPro.Inventory.Management.dll"]
+ENTRYPOINT ["dotnet", "DryPro.Inventory.Management.dll", "--environment=Test"]

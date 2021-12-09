@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/DryPro.Inventory.Management/DryPro.Inventory.Management/appsettings.Test.json
