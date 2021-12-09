@@ -15,11 +15,9 @@ namespace DryPro.Inventory.Management
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    var env = context.HostingEnvironment;
-                    System.Console.WriteLine($"--- {env.EnvironmentName} Environment ---");
-
+                    //var env = context.HostingEnvironment;
+                    //System.Console.WriteLine($"--- {env.EnvironmentName} Environment ---");
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                           .AddJsonFile("appsettings.overrides.json", optional: true, reloadOnChange: true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
