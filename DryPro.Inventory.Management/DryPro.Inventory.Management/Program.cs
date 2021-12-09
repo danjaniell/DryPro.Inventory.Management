@@ -16,7 +16,8 @@ namespace DryPro.Inventory.Management
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     config.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: false)
-                          .AddJsonFile("appsettings.Test.json", optional: false, reloadOnChange: false);
+                          .AddJsonFile("appsettings.Test.json", optional: false, reloadOnChange: false)
+                          .AddJsonFile("appsettings.Production.json", optional: false, reloadOnChange: false);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
