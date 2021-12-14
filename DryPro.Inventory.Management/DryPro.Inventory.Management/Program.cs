@@ -22,8 +22,12 @@ namespace DryPro.Inventory.Management
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://*:5024");
+                    webBuilder.UseStartup<Startup>()
+                              .UseKestrel(options =>
+                              {
+                                  options.ListenAnyIP(int.Parse(System.Environment.GetEnvironmentVariable("PORT")));
+                              })
+                              .UseUrls("http://*:5024");
                 });
     }
 }
