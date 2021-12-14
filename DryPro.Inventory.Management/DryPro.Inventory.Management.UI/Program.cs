@@ -25,7 +25,9 @@ namespace DryPro.Inventory.Management.UI
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    string port = Environment.GetEnvironmentVariable("PORT");
+                    webBuilder.UseStartup<Startup>()
+                              .UseUrls("http://*:" + port);
                 });
     }
 }

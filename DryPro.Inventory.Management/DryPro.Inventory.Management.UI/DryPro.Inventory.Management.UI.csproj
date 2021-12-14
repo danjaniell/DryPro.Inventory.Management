@@ -4,6 +4,9 @@
 	<TargetFramework>net5.0</TargetFramework>
 	<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
 	<Configurations>Debug;Release;Test</Configurations>
+	<UserSecretsId>06fe8723-aa31-440d-9116-b188d0ed91e7</UserSecretsId>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 	
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
@@ -39,6 +42,7 @@
 
   <ItemGroup>
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.12" />
+	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
 	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
