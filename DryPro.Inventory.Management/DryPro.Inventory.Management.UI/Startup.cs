@@ -34,6 +34,7 @@ namespace DryPro.Inventory.Management.UI
             services.AddSingleton<ProductCreateViewModel>();
             services.AddSingleton<ProductDetailsViewModel>();
             services.AddSingleton<AuxItemCreateViewModel>();
+            services.AddSingleton<InventoryDetailsViewModel>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

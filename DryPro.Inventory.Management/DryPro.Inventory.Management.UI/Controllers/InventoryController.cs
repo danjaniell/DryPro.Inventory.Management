@@ -16,15 +16,17 @@ namespace DryPro.Inventory.Management.UI.Controllers
     public class InventoryController : Controller
     {
         private readonly IEndpoint _ep;
+        private readonly InventoryDetailsViewModel _inventoryDetailsViewModel;
 
-        public InventoryController(IEndpoint ep)
+        public InventoryController(InventoryDetailsViewModel inventoryDetailsViewModel, IEndpoint ep)
         {
             _ep = ep;
+            _inventoryDetailsViewModel = inventoryDetailsViewModel;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View();
+            return View(_inventoryDetailsViewModel);
         }
     }
 }
