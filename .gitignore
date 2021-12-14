@@ -369,3 +369,4 @@ FodyWeavers.xsd
 /DryPro.Inventory.Management/DryPro.Inventory.Management.UI/appsettings.Production.json
 /builds/UI
 /builds/UI
+/heroku_deploy.cmd
