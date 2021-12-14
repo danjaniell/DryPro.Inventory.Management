@@ -31,8 +31,8 @@ namespace DryPro.Inventory.Management.UI
             services.Configure<Endpoints>(Configuration.GetSection(nameof(Endpoints)));
             services.AddSingleton<IEndpoint>(x => x.GetRequiredService<IOptions<Endpoints>>().Value);
             services.AddControllersWithViews();
-            services.AddSingleton<InventoryCreateViewModel>();
-            services.AddSingleton<InventoryDetailsViewModel>();
+            services.AddSingleton<ProductCreateViewModel>();
+            services.AddSingleton<ProductDetailsViewModel>();
             services.AddSingleton<AuxItemCreateViewModel>();
         }
 

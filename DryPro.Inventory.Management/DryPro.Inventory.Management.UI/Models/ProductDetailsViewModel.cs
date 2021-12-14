@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace DryPro.Inventory.Management.UI.Models
 {
-    public class InventoryDetailsViewModel : PageModel
+    public class ProductDetailsViewModel : PageModel
     {
         [BindProperty]
         public Product Product { get; set; }

@@ -6,9 +6,9 @@ using System.ComponentModel;
 
 namespace DryPro.Inventory.Management.UI.Models
 {
-    public class InventoryCreateViewModel : PageModel
+    public class ProductCreateViewModel : PageModel
     {
-        public InventoryCreateViewModel(AuxItemCreateViewModel auxItemCreateViewModel)
+        public ProductCreateViewModel(AuxItemCreateViewModel auxItemCreateViewModel)
         {
             AuxItemCreateViewModel = auxItemCreateViewModel;
         }

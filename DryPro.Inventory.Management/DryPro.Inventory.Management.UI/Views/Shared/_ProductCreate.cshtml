@@ -1,4 +1,4 @@
-﻿@model DryPro.Inventory.Management.UI.Models.InventoryCreateViewModel
+﻿@model DryPro.Inventory.Management.UI.Models.ProductCreateViewModel
 @using DryPro.Inventory.Management.Common.Enums
 @using Newtonsoft.Json;
 
@@ -111,7 +111,7 @@
             type: type, color: color, sellingPrice: sellingPrice, soldPrice: soldPrice, cost: cost, discount: discount
         };
         $.ajax({
-            url: '@Url.Action("SaveToViewModel", "Inventory")',
+            url: '@Url.Action("SaveToViewModel", "Product")',
             type: 'POST',
             cache: false,
             data: { data: JSON.stringify(data), createCount: createCount}

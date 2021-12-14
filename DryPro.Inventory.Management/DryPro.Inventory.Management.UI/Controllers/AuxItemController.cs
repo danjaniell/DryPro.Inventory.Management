@@ -47,9 +47,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 };
                 _auxItemCreateViewModel.AuxilliaryItems.Add(auxItem);
             }
-            //Modify _inventoryCreateViewModel to retain current state of other fields
-            //Option 1: Get value (json?) parse to Product, reassign the value to _inventoryCreateViewModel
-            //Option 2: Separate the view into 2 partials. Return partial only for the aux item create view.
+
             return PartialView("_AuxItemCreate", _auxItemCreateViewModel);
         }
 
@@ -84,7 +82,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                         result = await response.Content.ReadAsStringAsync(); //should be the product Id
                     }
                 }
-                return RedirectToAction("Details", "Inventory", new { id = result });
+                return RedirectToAction("Details", "Product", new { id = result });
             }
             return View(auxItem);
         }
@@ -121,7 +119,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                         result = await response.Content.ReadAsStringAsync(); //should be the product Id
                     }
                 }
-                return RedirectToAction("Details", "Inventory", new { id = result });
+                return RedirectToAction("Details", "Product", new { id = result });
             }
             return View(auxItem);
         }
