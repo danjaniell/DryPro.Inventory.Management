@@ -114,7 +114,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 HttpContent request = HttpContentHelper.CreateRequest(command);
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.PostAsync("https://localhost:5001/api/AuxilliaryItem/Delete", request))
+                    using (var response = await httpClient.PostAsync($"{_ep.Value}/api/AuxilliaryItem/Delete", request))
                     {
                         result = await response.Content.ReadAsStringAsync(); //should be the product Id
                     }
