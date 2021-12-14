@@ -35,7 +35,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
         // POST: AuxItem/Create
         [HttpPost]
         [Route("[controller]/Create")]
-        public async Task<IActionResult> Create(IFormCollection collection)
+        public IActionResult Create(IFormCollection collection)
         {
             if (ModelState.IsValid)
             {

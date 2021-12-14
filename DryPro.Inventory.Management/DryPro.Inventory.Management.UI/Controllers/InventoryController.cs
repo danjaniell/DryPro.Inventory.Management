@@ -17,16 +17,25 @@ namespace DryPro.Inventory.Management.UI.Controllers
     {
         private readonly IEndpoint _ep;
         private readonly InventoryDetailsViewModel _inventoryDetailsViewModel;
+        private readonly InventoryAddViewModel _inventoryAddViewModel;
 
-        public InventoryController(InventoryDetailsViewModel inventoryDetailsViewModel, IEndpoint ep)
+        public InventoryController(InventoryDetailsViewModel inventoryDetailsViewModel,
+                                   InventoryAddViewModel inventoryAddViewModel,
+                                   IEndpoint ep)
         {
             _ep = ep;
             _inventoryDetailsViewModel = inventoryDetailsViewModel;
+            _inventoryAddViewModel = inventoryAddViewModel;
         }
 
         public IActionResult Index()
         {
             return View(_inventoryDetailsViewModel);
+        }
+
+        public IActionResult Add()
+        {
+            return View(_inventoryAddViewModel);
         }
     }
 }
