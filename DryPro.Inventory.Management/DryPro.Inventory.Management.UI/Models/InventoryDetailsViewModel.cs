@@ -16,7 +16,6 @@ namespace DryPro.Inventory.Management.UI.Models
         [DisplayName("Product Type")]
         public ProductType Type { get; set; }
         public ProductColor Color { get; set; }
-
         [DisplayName("Remaining Stock")]
         public int Remaining { get; set; }
         [DisplayName("# of Sold Items")]
