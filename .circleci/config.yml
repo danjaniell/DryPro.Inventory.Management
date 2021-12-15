@@ -1,24 +1,29 @@
 version: 2.1
-orbs:
-  heroku: circleci/heroku@1.2.6
-  windows: circleci/windows@2.4.1
 jobs:
-  build:
-    description: Build application with Release configuration
-    executor:
-      name: windows/default
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - dotnet-packages-v1-{{ checksum "DryPro.Inventory.Management.csproj" }}
-      - run:
-          name: "Install project dependencies"
-          command: dotnet.exe restore
-      - run:
-          name: "Build Application according to some given configuration"
-          command: dotnet.exe build --configuration Release /p:env=Test
-workflows:
-  heroku_deploy:
-    jobs:
-      - heroku/deploy-via-git
+build:
+docker:
+    - image: jetcipher/circleci-dotnet-core:2.2
+steps:
+    - setup_remote_docker:
+    docker_layer_caching: false
+    version: 20.10.11
+    - checkout
+#Dotnet restore
+- run:
+    name: Restore
+    command: dotnet restore
+    working_directory: DryPro.Inventory.Management.UI
+#Dotnet build
+- run:
+    name: Build
+    command: dotnet build -c Release
+    working_directory: DryPro.Inventory.Management.UI
+- run:
+    name: Build and push Docker image
+    command: |
+    docker build --tag registry.heroku.com/dryproinventory/web dryproui
+    echo $HEROKU_TOKEN | docker login --username=_ --password-stdin registry.heroku.com
+    docker push registry.heroku.com/dryproinventory/web
+    sudo curl https://cli-assets.heroku.com/install.sh | sh
+    HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+    HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release --app dryproinventory web
