@@ -33,6 +33,7 @@
   <ItemGroup>
 	<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
 	<Content Include="appsettings.*.json" Exclude="appsettings.$(EnvironmentName).json" DependentUpon="appsettings.json" CopyToOutputDirectory="Never" />
+	<None Remove="build.cmd" />
 	<Content Condition="'$(Configuration)|$(Platform)' != 'Debug|AnyCPU'" Include="appsettings.$(EnvironmentName).json" DependentUpon="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   
