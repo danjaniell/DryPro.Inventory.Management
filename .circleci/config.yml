@@ -2,22 +2,22 @@ version: 2.1
 jobs:
     build:
         docker:
-            - image: jetcipher/circleci-dotnet-core:2.2
+            - image: jetcipher/circleci-dotnet-core:3.0
         steps:
             - setup_remote_docker:
                 docker_layer_caching: false
                 version: 20.10.7
             - checkout
             #Dotnet restore
-            #- run:
-            #    name: "Restore"
-            #    command: dotnet restore
-            #    working_directory: .\DryPro.Inventory.Management\DryPro.Inventory.Management.UI
+            - run:
+                name: "Restore"
+                command: dotnet restore
+                working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
             #Dotnet build
-            #- run:
-            #    name: "Build"
-            #    command: dotnet build -c Release
-            #    working_directory: .\DryPro.Inventory.Management\DryPro.Inventory.Management.UI
+            - run:
+                name: "Build"
+                command: dotnet build -c Release /p:env=Test
+                working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
             - run:
                 name: "Build and push Docker image"
                 command: |
