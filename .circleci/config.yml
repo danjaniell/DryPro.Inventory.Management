@@ -3,6 +3,7 @@ jobs:
     build:
         docker:
             - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+            - image: jetcipher/circleci-dotnet-core:3.0
         steps:
             - setup_remote_docker:
                 docker_layer_caching: false
