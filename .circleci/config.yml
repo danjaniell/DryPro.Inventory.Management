@@ -9,15 +9,15 @@ jobs:
                 version: 20.10.7
             - checkout
             #Dotnet restore
-            - run:
-                name: "Restore"
-                command: dotnet restore
-                working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
+            #- run:
+            #    name: "Restore"
+            #    command: dotnet restore
+            #    working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
             #Dotnet build
-            - run:
-                name: "Build"
-                command: dotnet build -c Release /p:env=Test
-                working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
+            #- run:
+            #    name: "Build"
+            #    command: dotnet build -c Release /p:env=Test
+            #    working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
             - run:
                 name: "Build and push Docker image"
                 command: |
