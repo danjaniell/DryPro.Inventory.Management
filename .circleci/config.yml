@@ -12,12 +12,12 @@ jobs:
             - run:
                 name: "Restore"
                 command: dotnet restore
-                working_directory: DryPro.Inventory.Management\DryPro.Inventory.Management.UI
+                working_directory: .\DryPro.Inventory.Management\DryPro.Inventory.Management.UI
             #Dotnet build
             - run:
                 name: "Build"
                 command: dotnet build -c Release
-                working_directory: DryPro.Inventory.Management\DryPro.Inventory.Management.UI
+                working_directory: .\DryPro.Inventory.Management\DryPro.Inventory.Management.UI
             - run:
                 name: "Build and push Docker image"
                 command: |
