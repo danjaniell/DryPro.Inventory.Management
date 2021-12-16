@@ -46,6 +46,8 @@
                 <td width="15%">
                     <a class="btn btn-success w-75" onclick="Save()">Save</a>
                     <input id="id" type="hidden" asp-for="@item._id" />
+                    <input id="itemType" type="hidden" asp-for="@item.Type" />
+                    <input id="itemColor" type="hidden" asp-for="@item.Color" />
                 </td>
             </tr>
         }
@@ -58,10 +60,12 @@
     <script type="text/javascript">
         function Save() {
             var id = $("#id").val();
+            var type = $("#itemType").val();
+            var color = $("#itemColor").val();
             var remaining = $("#remainingCount").val();
             var sold = $("#soldCount").val();
             var data = {
-                id: id, remaining: remaining, sold: sold
+                id: id, type: type, color: color, remaining: remaining, sold: sold
             };
             $.ajax({
                 url: '@Url.Action("Save", "Inventory")',

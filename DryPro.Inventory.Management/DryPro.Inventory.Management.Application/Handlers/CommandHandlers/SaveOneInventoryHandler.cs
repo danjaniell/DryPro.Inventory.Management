@@ -22,15 +22,16 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
         {
             var inventoryEntity = InventoryMapper.Mapper.Map<Core.Entities.Inventory>(request);
 
-            var product = await _invRepo.GetByIdAsync(inventoryEntity._id);
+            var item = await _invRepo.GetByIdAsync(inventoryEntity._id);
 
-            if (product is null)
+            if (item is null)
             {
-                return null;
+                await _invRepo.AddAsync(inventoryEntity);
+                return inventoryEntity._id;
             }
 
             await _invRepo.UpdateAsync(inventoryEntity);
-            return product._id;
+            return item._id;
         }
     }
 }
