@@ -8,6 +8,6 @@ namespace DryPro.Inventory.Management.UI.Models
 {
     public class InventoryManageViewModel : PageModel
     {
-        public IEnumerable<Core.Entities.Inventory> Inventory { get; set; }
+        public IEnumerable<Core.Entities.Inventory> Inventory { get; set; } = new List<Core.Entities.Inventory>();
     }
 }

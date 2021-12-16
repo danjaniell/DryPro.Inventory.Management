@@ -48,18 +48,40 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(_inventoryManageViewModel);
         }
 
+
+        // POST: Inventory/Save
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveAll(SaveInventoryCommand command)
+        {
+            string result = null;
+            if (ModelState.IsValid)
+            {
+                HttpContent request = HttpContentHelper.CreateRequest(command);
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.PostAsync($"{_ep.Value}/api/Inventory/SaveAll", request))
+                    {
+                        result = await response.Content.ReadAsStringAsync();
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(result);
+        }
+
         private async Task<IEnumerable<Product>> GetAvailableProducts()
         {
             var products = new List<Product>();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync($"{_ep.Value}/api/Product/GetAll"))
+                using (var response = await httpClient.GetAsync($"{_ep.Value}/api/Inventory/GetAvailableProducts"))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     products = JsonConvert.DeserializeObject<List<Product>>(apiResponse);
                 }
             }
-            var distinctProductList = products.GroupBy(m => new { m.Type, m.Color }).Select(group => group.First()).ToList();
+            var distinctProductList = products.GroupBy(m => new { m.Type, m.Color }).Select(group => group.OrderBy(x=>x.Type).First()).ToList();
             return distinctProductList;
         }
 
