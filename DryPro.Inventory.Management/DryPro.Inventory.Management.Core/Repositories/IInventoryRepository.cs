@@ -7,6 +7,6 @@ namespace DryPro.Inventory.Management.Core.Repositories
 {
     public interface IInventoryRepository : IRepository<Entities.Inventory>
     {
-        Task<string> ClearAllAndGenerateRandomData();
+        Task<long> UpdateAllAsync(IEnumerable<Entities.Inventory> entities);
     }
 }

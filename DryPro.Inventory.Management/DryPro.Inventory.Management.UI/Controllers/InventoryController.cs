@@ -52,7 +52,29 @@ namespace DryPro.Inventory.Management.UI.Controllers
         // POST: Inventory/Save
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SaveAll(SaveInventoryCommand command)
+        public async Task<IActionResult> Save(SaveAllInventoryCommand command)
+        {
+            string result = null;
+            if (ModelState.IsValid)
+            {
+                HttpContent request = HttpContentHelper.CreateRequest(command);
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.PostAsync($"{_ep.Value}/api/Inventory/SaveOne", request))
+                    {
+                        result = await response.Content.ReadAsStringAsync();
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(result);
+        }
+
+
+        // POST: Inventory/SaveAll
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveAll(SaveAllInventoryCommand command)
         {
             string result = null;
             if (ModelState.IsValid)

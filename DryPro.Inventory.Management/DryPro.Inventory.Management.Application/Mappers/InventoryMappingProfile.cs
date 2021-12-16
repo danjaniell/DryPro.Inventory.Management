@@ -6,7 +6,7 @@ namespace DryPro.Inventory.Management.Application.Mappers
 {
     public class InventoryMappingProfile : Profile
     {
-        public ProductMappingProfile()
+        public InventoryMappingProfile()
         {
             CreateMap<Core.Entities.Inventory, SaveInventoryCommand>().ReverseMap();
         }

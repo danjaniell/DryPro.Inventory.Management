@@ -20,32 +20,6 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             _inventory = database.GetCollection<Core.Entities.Inventory>("Inventory");
         }
 
-        public async Task<string> ClearAllAndGenerateRandomData()
-        {
-            try
-            {
-                await DeleteAll();
-                if ((await GetAllAsync()).Count == 0)
-                {
-                    var fixture = new Fixture();
-                    var inventoryBuilder = fixture.Build<Core.Entities.Inventory>();
-                    var inventory = inventoryBuilder.Do(a => a._id = ObjectId.GenerateNewId().ToString())
-                                                    .CreateMany(10)
-                                                    .ToList();
-                    inventory.ForEach(async x =>
-                    {
-                        x._id = new string(x._id.Replace("-", string.Empty).Skip(3).Take(24).ToArray()); //remove prefix "_id"
-                        await AddAsync(x);
-                    });
-                }
-                return "Success";
-            }
-            catch
-            {
-                return "Failed";
-            }
-        }
-
         public async Task DeleteAll() => await _inventory.DeleteManyAsync(x => true);
 
         public async Task<Core.Entities.Inventory> AddAsync(Core.Entities.Inventory entity)
@@ -61,5 +35,20 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
         public async Task<Core.Entities.Inventory> GetByIdAsync(string id) => (await _inventory.FindAsync(x => x._id == id)).SingleOrDefault();
 
         public async Task UpdateAsync(Core.Entities.Inventory entity) => await _inventory.ReplaceOneAsync(x => x._id == entity._id, entity);
+
+        public async Task<long> UpdateAllAsync(IEnumerable<Core.Entities.Inventory> entities)
+        {
+            var updates = new List<WriteModel<Core.Entities.Inventory>>();
+            var builder = Builders<Core.Entities.Inventory>.Filter;
+
+            foreach (var entity in entities)
+            {
+                var filter = builder.Where(x =>x.Remaining == entity.Remaining && x.Sold == entity.Sold);
+                updates.Add(new ReplaceOneModel<Core.Entities.Inventory>(filter, entity));
+            }
+
+            var result = await _inventory.BulkWriteAsync(updates);
+            return result.ModifiedCount;
+        }
     }
 }

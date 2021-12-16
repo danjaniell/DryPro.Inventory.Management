@@ -41,10 +41,10 @@ namespace DryPro.Inventory.Management.Controllers
         [HttpPost("SaveAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<string>> SaveInventory([FromBody] SaveInventoryCommand command)
+        public async Task<ActionResult<string>> SaveInventory([FromBody] SaveAllInventoryCommand command)
         {
             var result = await _mediator.Send(command);
-            if (result is null)
+            if (result == 0)
             {
                 return NoContent();
             }

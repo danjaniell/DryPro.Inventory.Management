@@ -6,10 +6,12 @@ using DryPro.Inventory.Management.Core.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
 {
-    public class SaveInventoryHandler : IRequestHandler<SaveInventoryCommand, string>
+    public class SaveInventoryHandler : IRequestHandler<SaveAllInventoryCommand, long>
     {
         private readonly IInventoryRepository _invRepo;
 
@@ -18,19 +20,10 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
             _invRepo = invRepo;
         }
 
-        public async Task<string> Handle(SaveInventoryCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(SaveAllInventoryCommand request, CancellationToken cancellationToken)
         {
-            var inventoryEntity = InventoryMapper.Mapper.Map<Core.Entities.Inventory>(request);
-
-            var product = await _invRepo.GetByIdAsync(inventoryEntity._id);
-
-            if (product is null)
-            {
-                return null;
-            }
-
-            await _invRepo.UpdateAsync(inventoryEntity);
-            return product._id;
+            var itemsToSave = InventoryMapper.Mapper.Map<IEnumerable<SaveInventoryCommand>, List<Core.Entities.Inventory>>(request.ItemsToSave);
+            return await _invRepo.UpdateAllAsync(itemsToSave);
         }
     }
 }
