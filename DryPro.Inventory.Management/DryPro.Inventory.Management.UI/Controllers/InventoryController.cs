@@ -48,12 +48,12 @@ namespace DryPro.Inventory.Management.UI.Controllers
             return View(_inventoryManageViewModel);
         }
 
-
         // POST: Inventory/Save
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save(SaveAllInventoryCommand command)
+        [Route("[controller]/Save")]
+        public async Task<IActionResult> Save(IFormCollection collection)
         {
+            var command = JsonConvert.DeserializeObject<SaveInventoryCommand>(collection["data"]);
             string result = null;
             if (ModelState.IsValid)
             {

@@ -12,7 +12,7 @@
             <h4>Inventory</h4>
         </div>
         <div class="col-md-2">
-            <a asp-action="SaveAll" class="btn btn-primary- w-100">Save All</a>
+            <a asp-action="SaveAll" class="btn btn-primary w-100">Save All</a>
         </div>
     </div>
 </div>
@@ -24,26 +24,28 @@
             <th>Color</th>
             <th>Remaining</th>
             <th>Sold</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Inventory)
         {
             <tr>
-                <td width="40%">@item.Type</td>
-                <td width="30%">@item.Color</td>
+                <td width="30%">@item.Type</td>
+                <td width="25%">@item.Color</td>
                 <td width="15%" class="text-center">
                     <div class="btn-group" role="group">
-                        <input asp-for="@item.Remaining" class="form-control" />
+                        <input id="remainingCount" asp-for="@item.Remaining" class="form-control" />
                     </div>
                 </td>
                 <td width="15%" class="text-center">
                     <div class="btn-group" role="group">
-                        <input asp-for="@item.Sold" class="form-control" />
+                        <input id="soldCount" asp-for="@item.Sold" class="form-control" />
                     </div>
                 </td>
                 <td width="15%">
-                    <a asp-action="SaveOne" asp-route-id="@item._id" class="btn btn-primary w-100">Save</a>
+                    <a class="btn btn-success w-75" onclick="Save()">Save</a>
+                    <input id="id" type="hidden" asp-for="@item._id" />
                 </td>
             </tr>
         }
@@ -52,4 +54,21 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        function Save() {
+            var id = $("#id").val();
+            var remaining = $("#remainingCount").val();
+            var sold = $("#soldCount").val();
+            var data = {
+                id: id, remaining: remaining, sold: sold
+            };
+            $.ajax({
+                url: '@Url.Action("Save", "Inventory")',
+                type: 'POST',
+                cache: false,
+                data: { data: JSON.stringify(data) }
+            });
+        }
+    </script>
 }
