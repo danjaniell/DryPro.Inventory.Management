@@ -3,7 +3,18 @@
 
 @{
     ViewData["Title"] = "Manage";
+
 }
+
+<div class="container p-5">
+    <div class="alert-popup text-center">
+        <div class="col-lg-6 col-md-12 m-auto">
+            <div class="alert alert-success fade show" role="alert">
+                <strong>Success!</strong>
+            </div>
+        </div>
+    </div>
+</div>
 
 <a asp-action="Index" class="btn btn-success"><i class="fas fa-arrow-alt-circle-left"></i></a>
 <div class="container">
@@ -28,42 +39,44 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Inventory)
+        @for (int i = 0; i < Model.Inventory.Count(); i++)
         {
+            var item = Model.Inventory.ElementAt(i);
             <tr>
                 <td width="30%">@item.Type</td>
                 <td width="25%">@item.Color</td>
                 <td width="15%" class="text-center">
                     <div class="btn-group" role="group">
-                        <input id="remainingCount" asp-for="@item.Remaining" class="form-control" />
+                        <input id="@(string.Format("remainingCount{0}", i))" asp-for="@item.Remaining" class="form-control" />
                     </div>
                 </td>
                 <td width="15%" class="text-center">
                     <div class="btn-group" role="group">
-                        <input id="soldCount" asp-for="@item.Sold" class="form-control" />
+                        <input id="@(string.Format("soldCount{0}", i))" asp-for="@item.Sold" class="form-control" />
                     </div>
                 </td>
                 <td width="15%">
-                    <a class="btn btn-success w-75" onclick="Save()">Save</a>
-                    <input id="id" type="hidden" asp-for="@item._id" />
-                    <input id="itemType" type="hidden" asp-for="@item.Type" />
-                    <input id="itemColor" type="hidden" asp-for="@item.Color" />
+                    <a id="@(string.Format("btnAlert{0}", i))" class="btn btn-success w-75" onclick="Save(@i.ToString())">Save</a>
+                    <input id="@(string.Format("id{0}", i))" type="hidden" asp-for="@item._id" />
+                    <input id="@(string.Format("itemType{0}", i))" type="hidden" asp-for="@item.Type" />
+                    <input id="@(string.Format("itemColor{0}", i))" type="hidden" asp-for="@item.Color" />
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
-        function Save() {
-            var id = $("#id").val();
-            var type = $("#itemType").val();
-            var color = $("#itemColor").val();
-            var remaining = $("#remainingCount").val();
-            var sold = $("#soldCount").val();
+        function Save(num) {
+            var id = $("#id" + num).val();
+            var type = $("#itemType" + num).val();
+            var color = $("#itemColor" + num).val();
+            var remaining = $("#remainingCount" + num).val();
+            var sold = $("#soldCount" + num).val();
             var data = {
                 id: id, type: type, color: color, remaining: remaining, sold: sold
             };
@@ -74,5 +87,23 @@
                 data: { data: JSON.stringify(data) }
             });
         }
+
+        $(document).ready(function () {
+            $(".alert").hide();
+        });
+
+        $("#btnAlert").on("click", function () {
+            $(".alert").show(100);
+            $(".alert").delay(1500).hide(200);
+        });
     </script>
+    <style>
+        .alert-popup {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            color: white;
+        }
+    </style>
 }

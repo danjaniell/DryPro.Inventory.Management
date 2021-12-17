@@ -2,6 +2,7 @@
 using DryPro.Inventory.Management.Application.Mappers;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
+using DryPro.Inventory.Management.Core.Services;
 using DryPro.Inventory.Management.Infrastructure.Data;
 using DryPro.Inventory.Management.UI.Models;
 using Microsoft.AspNetCore.Http;
@@ -33,8 +34,13 @@ namespace DryPro.Inventory.Management.UI.Controllers
 
         private async Task Init()
         {
-            var products = await GetAvailableProducts();
-            _inventoryManageViewModel.Inventory = ProductToInventory(products);
+            //Retrieve existing data in Inventory Collection
+            var inventory = await GetInventory();
+
+            //Add non existing in Inventory Collection, but in Products Collection
+            var extraInventory = ProductToInventory(await GetAvailableProducts());
+
+            _inventoryManageViewModel.Inventory = inventory.Union(extraInventory, new InventoryComparer()).OrderBy(x=>x.Type).ThenBy(x=>x.Color).ToList();
         }
 
         public async Task<IActionResult> Index()
@@ -65,7 +71,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                         result = await response.Content.ReadAsStringAsync();
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Manage));
             }
             return View(result);
         }
@@ -90,6 +96,20 @@ namespace DryPro.Inventory.Management.UI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(result);
+        }
+
+        private async Task<IEnumerable<Core.Entities.Inventory>> GetInventory()
+        {
+            var inventory = new List<Core.Entities.Inventory>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync($"{_ep.Value}/api/Inventory/GetAll"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    inventory = JsonConvert.DeserializeObject<List<Core.Entities.Inventory>>(apiResponse);
+                }
+            }
+            return inventory;
         }
 
         private async Task<IEnumerable<Product>> GetAvailableProducts()

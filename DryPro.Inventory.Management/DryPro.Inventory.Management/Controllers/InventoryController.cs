@@ -1,4 +1,5 @@
 ﻿using DryPro.Inventory.Management.Application.Commands;
+using DryPro.Inventory.Management.Application.Queries.Inventory;
 using DryPro.Inventory.Management.Application.Queries.Product;
 using DryPro.Inventory.Management.Application.Responses;
 using DryPro.Inventory.Management.Common.Enums;
@@ -23,7 +24,11 @@ namespace DryPro.Inventory.Management.Controllers
 
         [HttpGet("GetAvailableProducts")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Product>> GetAvailableProducts() => await _mediator.Send(new GetAllProductsQuery());
+        public async Task<IEnumerable<Core.Entities.Product>> GetAvailableProducts() => await _mediator.Send(new GetAllProductsQuery());
+
+        [HttpGet("GetAll")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<List<Core.Entities.Inventory>> GetAll() => await _mediator.Send(new GetAllInventoryQuery());
 
         [HttpPost("SaveOne")]
         [ProducesResponseType(StatusCodes.Status200OK)]

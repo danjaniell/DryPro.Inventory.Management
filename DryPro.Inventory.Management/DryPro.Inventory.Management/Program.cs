@@ -27,6 +27,7 @@ namespace DryPro.Inventory.Management
                               {
                                   options.ListenAnyIP(int.Parse(System.Environment.GetEnvironmentVariable("PORT")));
                               })
+                              .UseIIS()
                               .UseUrls("http://*:5024");
                 });
     }

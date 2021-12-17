@@ -11,11 +11,11 @@ using System.Linq;
 
 namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
 {
-    public class SaveInventoryHandler : IRequestHandler<SaveAllInventoryCommand, long>
+    public class SaveAllInventoryHandler : IRequestHandler<SaveAllInventoryCommand, long>
     {
         private readonly IInventoryRepository _invRepo;
 
-        public SaveInventoryHandler(IInventoryRepository invRepo)
+        public SaveAllInventoryHandler(IInventoryRepository invRepo)
         {
             _invRepo = invRepo;
         }
