@@ -34,7 +34,6 @@ namespace DryPro.Inventory.Management.UI
             services.AddSingleton<ProductCreateViewModel>();
             services.AddSingleton<ProductDetailsViewModel>();
             services.AddSingleton<AuxItemCreateViewModel>();
-            services.AddSingleton<InventoryDetailsViewModel>();
             services.AddSingleton<InventoryManageViewModel>();
         }
 

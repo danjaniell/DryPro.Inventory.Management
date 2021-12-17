@@ -20,15 +20,12 @@ namespace DryPro.Inventory.Management.UI.Controllers
     public class InventoryController : Controller
     {
         private readonly IEndpoint _ep;
-        private readonly InventoryDetailsViewModel _inventoryDetailsViewModel;
         private readonly InventoryManageViewModel _inventoryManageViewModel;
 
-        public InventoryController(InventoryDetailsViewModel inventoryDetailsViewModel,
-                                   InventoryManageViewModel inventoryManageViewModel,
+        public InventoryController(InventoryManageViewModel inventoryManageViewModel,
                                    IEndpoint ep)
         {
             _ep = ep;
-            _inventoryDetailsViewModel = inventoryDetailsViewModel;
             _inventoryManageViewModel = inventoryManageViewModel;
         }
 
@@ -43,14 +40,9 @@ namespace DryPro.Inventory.Management.UI.Controllers
             _inventoryManageViewModel.Inventory = inventory.Union(extraInventory, new InventoryComparer()).OrderBy(x=>x.Type).ThenBy(x=>x.Color).ToList();
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Manage()
         {
             await Init();
-            return View(_inventoryDetailsViewModel);
-        }
-
-        public IActionResult Manage()
-        {
             return View(_inventoryManageViewModel);
         }
 
