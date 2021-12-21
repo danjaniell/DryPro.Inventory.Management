@@ -89,7 +89,7 @@ namespace DryPro.Inventory.Management.UI.Controllers
                         result = await response.Content.ReadAsStringAsync();
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Manage));
             }
             return View(result);
         }
