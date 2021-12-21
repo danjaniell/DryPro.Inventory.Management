@@ -13,12 +13,12 @@
             <h4>Inventory</h4>
         </div>
         <div class="col-md-2">
-            <a asp-action="SaveAll" class="btn btn-primary w-100">Save All</a>
+            <a id="btnSaveAll" class="btn btn-primary w-100">Save All</a>
         </div>
     </div>
 </div>
 <hr />
-<table class="table table-striped table-secondary" style="width:100%">
+<table id="invTable" class="table table-striped table-secondary" style="width:100%">
     <thead>
         <tr>
             <th>Type</th>
@@ -71,30 +71,61 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script type="text/javascript">
-        function Save(num) {
-            var id = $("#id" + num).val();
-            var type = $("#itemType" + num).val();
-            var color = $("#itemColor" + num).val();
-            var remaining = $("#remainingCount" + num).val();
-            var sold = $("#soldCount" + num).val();
-            var data = {
-                id: id, type: type, color: color, remaining: remaining, sold: sold
-            };
+        $("#btnSaveAll").click(async function () {
+            var count = $("#invTable TBODY TR").length;
+            var message = [];
+        
+            for (var i=0; i<count; i++)
+            {
+                var row = $("#myTbl TBODY TR").eq(i);
+                var item = {};
+                item.id = $("#id" + i).val();
+                item.type = $("#itemType" + i).val();                
+                item.color = $("#itemColor" + i).val();                
+                item.remaining = $("#remainingCount" + i).val();                
+                item.sold = $("#soldCount" + i).val();
+                message.push(item);
+            }
+
+            $.ajax({
+                url: '@Url.Action("SaveAll", "Inventory")',
+                type: "POST",
+                cache: false,
+                async: true,
+                data: { data: JSON.stringify(message) },
+                success: function (data) {
+                    $(".alert").show(100);
+                    $(".alert").delay(1500).hide(200);
+                }
+            });
+           await sleep(500);
+        });
+    
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        function Save(i) {
+            var message = {};
+            message.id = $("#id" + i).val();
+            message.type = $("#itemType" + i).val();                
+            message.color = $("#itemColor" + i).val();                
+            message.remaining = $("#remainingCount" + i).val();                
+            message.sold = $("#soldCount" + i).val();
             $.ajax({
                 url: '@Url.Action("Save", "Inventory")',
                 type: 'POST',
                 cache: false,
-                data: { data: JSON.stringify(data) }
+                data: { data: JSON.stringify(message) },
+                success: function (data) {
+                    $(".alert").show(100);
+                    $(".alert").delay(1500).hide(200);
+                }
             });
         }
-
+        
         $(document).ready(function () {
             $(".alert").hide();
-        });
-
-        $(".btnSaveAlert").on("click", function () {
-            $(".alert").show(100);
-            $(".alert").delay(1500).hide(200);
         });
     </script>
     <style>
