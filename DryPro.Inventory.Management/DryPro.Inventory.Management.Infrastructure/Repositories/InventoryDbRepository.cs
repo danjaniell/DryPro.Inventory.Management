@@ -39,11 +39,10 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
         public async Task<long> UpdateAllAsync(IEnumerable<Core.Entities.Inventory> entities)
         {
             var updates = new List<WriteModel<Core.Entities.Inventory>>();
-            var builder = Builders<Core.Entities.Inventory>.Filter;
 
             foreach (var entity in entities)
             {
-                var filter = builder.Where(x =>x.Remaining == entity.Remaining && x.Sold == entity.Sold);
+                var filter = Builders<Core.Entities.Inventory>.Filter.Eq(x =>x._id, entity._id);
                 updates.Add(new ReplaceOneModel<Core.Entities.Inventory>(filter, entity));
             }
 
