@@ -9,15 +9,16 @@ jobs:
       name: windows/default
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dotnet-packages-v1-{{ checksum "DryPro.Inventory.Management.UI.csproj" }}
+      #Dotnet restore
       - run:
-          name: "Install project dependencies"
-          command: dotnet.exe restore
+          name: "Restore"
+          command: dotnet restore
+          working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
+      #Dotnet build
       - run:
-          name: "Build Application according to some given configuration"
-          command: dotnet.exe build -c Release /p:env=Test
+          name: "Build"
+          command: dotnet build -c Release /p:env=Test
+          working_directory: DryPro.Inventory.Management/DryPro.Inventory.Management.UI
 workflows:
   heroku_deploy:
     jobs:
