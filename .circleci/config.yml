@@ -11,13 +11,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dotnet-packages-v1-{{ checksum "demoDotnet.csproj" }}
+            - dotnet-packages-v1-{{ checksum "DryPro.Inventory.Management.UI.csproj" }}
       - run:
           name: "Install project dependencies"
           command: dotnet.exe restore
       - run:
           name: "Build Application according to some given configuration"
-          command: dotnet.exe build --configuration Release
+          command: dotnet.exe build -c Release /p:env=Test
 workflows:
   heroku_deploy:
     jobs:
