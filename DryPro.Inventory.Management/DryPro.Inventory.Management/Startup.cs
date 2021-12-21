@@ -1,19 +1,15 @@
 using DryPro.Inventory.Management.Application.Handlers.CommandHandlers;
 using DryPro.Inventory.Management.Core.Repositories;
-using DryPro.Inventory.Management.Core.Repositories.Base;
 using DryPro.Inventory.Management.Infrastructure.Data;
 using DryPro.Inventory.Management.Infrastructure.Repositories;
-using DryPro.Inventory.Management.Infrastructure.Repositories.Base;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
 using System.Globalization;
 using System.Reflection;
 
@@ -37,7 +33,6 @@ namespace DryPro.Inventory.Management
             services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(x => x.GetRequiredService<IOptions<DatabaseSettings>>().Value);
             services.AddControllers();
-            //services.AddDbContext<ProductContext>(options => options.UseInMemoryDatabase(databaseName: "ProductsDB"), ServiceLifetime.Singleton);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
