@@ -13,7 +13,7 @@
             <h4>Inventory</h4>
         </div>
         <div class="col-md-2">
-            <a id="btnSaveAll" class="btn btn-primary w-100">Save All</a>
+            <a id="btnSaveAll" class="btn btn-outline-warning w-100">Save All</a>
         </div>
     </div>
 </div>
@@ -22,6 +22,7 @@
     <thead>
         <tr>
             <th>Type</th>
+            <th></th>
             <th>Color</th>
             <th>Remaining</th>
             <th>Sold</th>
@@ -32,26 +33,24 @@
         @for (int i = 0; i < Model.Inventory.Count(); i++)
         {
             var item = Model.Inventory.ElementAt(i);
-            <tr>
-                <td width="30%">@item.Type</td>
-                <td width="25%">@item.Color</td>
-                <td width="15%" class="text-center">
-                    <div class="btn-group" role="group">
-                        <input id="@(string.Format("remainingCount{0}", i))" asp-for="@item.Remaining" class="form-control" />
-                    </div>
-                </td>
-                <td width="15%" class="text-center">
-                    <div class="btn-group" role="group">
-                        <input id="@(string.Format("soldCount{0}", i))" asp-for="@item.Sold" class="form-control" />
-                    </div>
-                </td>
-                <td width="15%">
-                    <a class="btn btn-success w-75 btnSaveAlert" onclick="Save(@i.ToString())">Save</a>
-                    <input id="@(string.Format("id{0}", i))" type="hidden" asp-for="@item._id" />
-                    <input id="@(string.Format("itemType{0}", i))" type="hidden" asp-for="@item.Type" />
-                    <input id="@(string.Format("itemColor{0}", i))" type="hidden" asp-for="@item.Color" />
-                </td>
-            </tr>
+        <tr>
+            <td width="15%">@item.Type</td>
+            <td width="15%">
+                <input id="@(string.Format("id{0}", i))" type="hidden" asp-for="@item._id" />
+                <input id="@(string.Format("itemType{0}", i))" type="hidden" asp-for="@item.Type" />
+                <input id="@(string.Format("itemColor{0}", i))" type="hidden" asp-for="@item.Color" />
+            </td>
+            <td width="25%">@item.Color</td>
+            <td width="15%" class="text-center">
+                <input id="@(string.Format("remainingCount{0}", i))" asp-for="@item.Remaining" class="form-control" />
+            </td>
+            <td width="15%" class="text-center">
+                <input id="@(string.Format("soldCount{0}", i))" asp-for="@item.Sold" class="form-control" />
+            </td>
+            <td width="15%" class="text-right">
+                <a class="btn btn-success" onclick="Save(@i.ToString())"><i class="fas fa-save"></i></a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -16,35 +16,31 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-10">
-                            <div class="row">
                                 <div class="col-md-4">
                                     <form asp-action="Create">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        <div class="form-group">
+                                        <div class="input-group row">
                                             <label asp-for="Current.Name" class="control-label"></label>
-                                            <input id="auxItemName" class="form-control" />
+                                            <input id="auxItemName" class="form-control-alternative" />
                                             <span asp-validation-for="Current.Name" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="input-group row">
                                             <label asp-for="Current.Cost" class="control-label"></label>
-                                            <input id="auxItemCost" class="form-control" />
+                                            <input id="auxItemCost" class="form-control-alternative" />
                                             <span asp-validation-for="Current.Cost" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="input-group row">
                                             <label asp-for="Current.Description" class="control-label"></label>
-                                            <input id="auxItemDesc" class="form-control" />
+                                            <input id="auxItemDesc" class="form-control-alternative" />
                                             <span asp-validation-for="Current.Description" class="text-danger"></span>
                                         </div>
                                     </form>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <br/>
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-success" value="Add" onclick="AddAuxItem()" />
-                    @*<a asp-controller="AuxItem" asp-action="Create" class="btn btn-success">Add</a>*@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
