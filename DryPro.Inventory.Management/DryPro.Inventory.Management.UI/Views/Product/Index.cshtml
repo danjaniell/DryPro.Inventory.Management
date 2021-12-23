@@ -39,22 +39,22 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td width="20%">@item.Type</td>
-            <td width="10%">@item.Color</td>
-            <td width="10%">@item.SellingPrice</td>
-            <td width="10%">@item.SoldPrice</td>
-            <td width="10%">@item.Cost</td>
-            <td width="10%">@item.Discount</td>
-            <td width="30%">@((item.SoldPrice - item.Cost).ToString("c"))</td>
-            <td class="text-center">
-                <div class="btn-group-sm" role="group">
-                    <a class="btn btn-primary mx-1" asp-action="Details" asp-route-id="@item._id"><i class="fas fa-info-circle"></i></a>
-                    <a class="btn btn-primary mx-1" asp-action="Edit" asp-route-id="@item._id"><i class="far fa-edit"></i></a>
-                    <a class="btn btn-danger mx-1" asp-action="Delete" asp-route-id="@item._id"><i class="far fa-trash-alt"></i></a>
-                </div>
-            </td>
-        </tr>
+            <tr>
+                <td width="20%">@item.Type</td>
+                <td width="10%">@item.Color</td>
+                <td width="10%">@(item.SellingPrice.ToString("c"))</td>
+                <td width="10%">@(item.SoldPrice.ToString("c"))</td>
+                <td width="10%">@(item.Cost.ToString("c"))</td>
+                <td width="10%">@item.Discount</td>
+                <td width="30%">@((item.SoldPrice - item.Cost).ToString("c"))</td>
+                <td class="text-center">
+                    <div class="btn-group-sm" role="group">
+                        <a class="btn btn-primary mx-1" asp-action="Details" asp-route-id="@item._id"><i class="fas fa-info-circle"></i></a>
+                        <a class="btn btn-primary mx-1" asp-action="Edit" asp-route-id="@item._id"><i class="far fa-edit"></i></a>
+                        <a class="btn btn-danger mx-1" asp-action="Delete" asp-route-id="@item._id"><i class="far fa-trash-alt"></i></a>
+                    </div>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
