@@ -20,10 +20,12 @@ namespace DryPro.Inventory.Management.Core.Entities
         public decimal SellingPrice { get; set; }
         [DisplayName("Sold Price")]
         public decimal SoldPrice { get; set; }
+        [DisplayName("Product Cost")]
         public decimal Cost { get; set; }
         [DisplayName("Total Cost")]
         public decimal TotalCost => Cost + AuxilliaryItems.Sum(x => x.Cost);
         public decimal Discount { get; set; }
+        [DisplayName("Auxilliary Items")]
         public IList<AuxilliaryItem> AuxilliaryItems { get; set; } = new List<AuxilliaryItem>();
     }
 }

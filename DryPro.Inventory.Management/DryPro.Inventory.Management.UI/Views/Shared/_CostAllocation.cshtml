@@ -1,0 +1,50 @@
+﻿@using System.Linq;
+@model IEnumerable<DryPro.Inventory.Management.Core.Entities.AuxilliaryItem>
+@{
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Name).ToList());
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Cost).ToList());
+    ViewData["Title"] = "Allocation";
+}
+<div>
+    <canvas width="450" height="450" id="allocChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+<script type="text/javascript">
+    const data = {
+        labels: @Html.Raw(XLabels),
+        datasets: [{
+            label: 'My First Dataset',
+            data: @Html.Raw(YValues),
+            backgroundColor: [
+                'rgba(123, 122, 117)',
+                'rgba(22, 69, 183)',
+                'rgba(252, 179, 181)',
+                'rgba(183, 58, 158)',
+                'rgba(221, 29, 4)',
+                'rgba(236, 222, 112)',
+                'rgba(0, 0, 128, 1)',
+                'rgba(0, 194, 203)',
+                'rgba(103, 37, 99)',
+                'rgba(195, 233, 192)',
+                'rgba(235, 24, 37)',
+                'rgba(215, 150, 4)',
+                'rgba(0, 194, 203)'
+            ],
+            hoverOffset: 4
+        }]
+    };
+
+    const config = {
+        type: 'doughnut',
+        data: data,
+    };
+
+    let chart = new Chart('allocChart', {
+        type: 'doughnut',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
