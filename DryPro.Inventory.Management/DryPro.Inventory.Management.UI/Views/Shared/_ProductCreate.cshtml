@@ -1,6 +1,6 @@
 ﻿@model DryPro.Inventory.Management.UI.Models.ProductCreateViewModel
 @using DryPro.Inventory.Management.Common.Enums
-@using Newtonsoft.Json;
+@using Newtonsoft.Json
 
 @{
     ViewData["Title"] = "Create";
@@ -69,7 +69,7 @@
                                 @foreach (var auxItem in Model.AuxItemCreateViewModel.AuxilliaryItems)
                                 {
                                     <tr>
-                                        <td width="30%">@auxItem.Name</td>
+                                        <td width="30%">@auxItem.Category</td>
                                         <td width="10%">@(auxItem.Cost.ToString("c"))</td>
                                         <td width="50%">@auxItem.Description</td>
                                     </tr>

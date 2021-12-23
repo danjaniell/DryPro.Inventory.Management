@@ -1,7 +1,7 @@
 ﻿@using System.Linq;
 @model IEnumerable<DryPro.Inventory.Management.Core.Entities.AuxilliaryItem>
 @{
-    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Name).ToList());
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => $"{x.Category} - {x.Description}").ToList());
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Cost).ToList());
     ViewData["Title"] = "Allocation";
 }

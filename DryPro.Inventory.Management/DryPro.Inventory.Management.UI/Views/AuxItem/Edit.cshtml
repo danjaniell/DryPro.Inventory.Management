@@ -1,4 +1,5 @@
 ﻿@model DryPro.Inventory.Management.Core.Entities.AuxilliaryItem
+@using DryPro.Inventory.Management.Common.Enums
 @{
     ViewData["Title"] = "Edit";
 }
@@ -18,9 +19,11 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="ProductId" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" asp-items="Html.GetEnumSelectList<AuxItemCategory>()" class="form-control">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
@@ -41,6 +44,8 @@
         </form>
     </div>
 </div>
+<br/>
+<br/>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

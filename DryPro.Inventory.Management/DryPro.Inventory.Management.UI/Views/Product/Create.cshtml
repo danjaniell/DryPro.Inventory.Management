@@ -11,35 +11,36 @@
 </div>
 
 @section Scripts {
-<script type="text/javascript">
-    var _auxilliaryItems;
-
-    var OpenAddAuxItemDialog = function (auxilliaryItems) {
-        InitCreateAuxItem(auxilliaryItems);
-        $("#add-auxItem").modal('show');
-    }
-
-    var InitCreateAuxItem = function (auxilliaryItems) {
-        _auxilliaryItems = auxilliaryItems;
-    }
-
-    var AddAuxItem = function () {
-        var name = $("#auxItemName").val();
-        var cost = $("#auxItemCost").val();
-        var desc = $("#auxItemDesc").val();
-        $.ajax({
-            url: '@Url.Action("Create", "AuxItem")',
-            type: 'POST',
-            cache: false,
-            data: { auxItems: _auxilliaryItems, name: name, cost: cost, description: desc },
-            success: function (results) {
-                $("#add-auxItem").modal('hide');
-                $('#divPartial').html(results);
-                $('#divPartial').show();
-                document.location.reload(true);
-            }
-        });
-    }
-</script>
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        var _auxilliaryItems;
+    
+        var OpenAddAuxItemDialog = function (auxilliaryItems) {
+            InitCreateAuxItem(auxilliaryItems);
+            $("#add-auxItem").modal('show');
+        }
+    
+        var InitCreateAuxItem = function (auxilliaryItems) {
+            _auxilliaryItems = auxilliaryItems;
+        }
+    
+        var AddAuxItem = function () {
+            var data = {};
+            data.category = $("#auxItemCategory").val();
+            data.cost = $("#auxItemCost").val();
+            data.desc = $("#auxItemDesc").val();
+            $.ajax({
+                url: '@Url.Action("Create", "AuxItem")',
+                type: 'POST',
+                cache: false,
+                data: { data: JSON.stringify(data) },
+                success: function (results) {
+                    $("#add-auxItem").modal('hide');
+                    $('#divPartial').html(results);
+                    $('#divPartial').show();
+                    document.location.reload(true);
+                }
+            });
+        }
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

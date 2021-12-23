@@ -1,8 +1,6 @@
 ﻿using DryPro.Inventory.Management.Application.Responses;
 using DryPro.Inventory.Management.Common.Enums;
-using DryPro.Inventory.Management.Core.Entities;
 using MediatR;
-using System.Collections.Generic;
 
 namespace DryPro.Inventory.Management.Application.Commands
 {
@@ -10,7 +8,7 @@ namespace DryPro.Inventory.Management.Application.Commands
     {
         public int Id { get; set; }
         public string ProductId { get; set; }
-        public string Name { get; set; }
+        public AuxItemCategory Category { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }
     }

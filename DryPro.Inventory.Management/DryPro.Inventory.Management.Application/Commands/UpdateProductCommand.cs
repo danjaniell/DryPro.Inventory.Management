@@ -16,6 +16,5 @@ namespace DryPro.Inventory.Management.Application.Commands
         public decimal SoldPrice { get; set; }
         public decimal Cost { get; set; }
         public decimal Discount { get; set; }
-        public IEnumerable<AuxilliaryItem> AuxilliaryItems { get; set; }
     }
 }

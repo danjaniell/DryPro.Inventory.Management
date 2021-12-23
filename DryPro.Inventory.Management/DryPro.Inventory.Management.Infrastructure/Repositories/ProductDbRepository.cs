@@ -40,7 +40,7 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
                     products.ForEach(async x =>
                     {
                         x._id = new string(x._id.Replace("-", string.Empty).Skip(3).Take(24).ToArray()); //remove prefix "_id"
-                        x.AuxilliaryItems = products.ConvertAll(a => auxItemBuilder.With(b => b.ProductId, x._id).Create());
+                        x.AuxilliaryItems = products.ConvertAll(a => auxItemBuilder.With(b => b.ProductId, x._id).With(b=>b.Description, GenerateDescription()).Create());
                         await AddAsync(x);
                     });
                 }
@@ -50,6 +50,16 @@ namespace DryPro.Inventory.Management.Infrastructure.Repositories
             {
                 return "Failed";
             }
+        }
+
+        private string GenerateDescription()
+        {
+            string randomString = new Fixture().Create<string>();
+            var rnd = new System.Random(System.DateTime.Now.Millisecond);
+            int start = rnd.Next(0, randomString.Length - 1);
+            int end = rnd.Next(randomString.Length - start);
+            string limitText = randomString.Substring(start, end);
+            return limitText.Replace("-", string.Empty);
         }
 
         public async Task DeleteAll() => await _products.DeleteManyAsync(x => true);

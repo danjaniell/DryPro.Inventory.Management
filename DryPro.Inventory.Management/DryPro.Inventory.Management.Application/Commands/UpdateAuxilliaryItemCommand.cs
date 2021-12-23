@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using DryPro.Inventory.Management.Common.Enums;
+using MediatR;
 using System.ComponentModel.DataAnnotations;
 
 namespace DryPro.Inventory.Management.Application.Commands
@@ -8,7 +9,7 @@ namespace DryPro.Inventory.Management.Application.Commands
         [Key]
         public int Id { get; set; }
         public string ProductId { get; set; }
-        public string Name { get; set; }
+        public AuxItemCategory Category { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }
     }

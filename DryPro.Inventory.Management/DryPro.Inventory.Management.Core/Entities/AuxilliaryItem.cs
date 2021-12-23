@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using DryPro.Inventory.Management.Common.Enums;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -8,15 +9,13 @@ namespace DryPro.Inventory.Management.Core.Entities
 {
     public class AuxilliaryItem : IEquatable<AuxilliaryItem>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         [BsonId]
         [BsonRequired]
         [BsonRepresentation(BsonType.ObjectId)]
         [ForeignKey("ProductId")]
         public string ProductId { get; set; }
-        public string Name { get; set; }
+        public AuxItemCategory? Category { get; set; }
         public decimal Cost { get; set; }
         public string Description { get; set; }
 

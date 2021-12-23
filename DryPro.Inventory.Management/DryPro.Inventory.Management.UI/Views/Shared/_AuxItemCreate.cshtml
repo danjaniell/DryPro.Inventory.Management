@@ -1,7 +1,11 @@
 ﻿@model DryPro.Inventory.Management.UI.Models.AuxItemCreateViewModel
+@using DryPro.Inventory.Management.Common.Enums
 @{ 
     ViewData["Title"] = "Create";
-    Model.Current = new DryPro.Inventory.Management.Core.Entities.AuxilliaryItem();
+    Model.Current = new DryPro.Inventory.Management.Core.Entities.AuxilliaryItem()
+    {
+        Category = null
+    };
 }
 
 <div class="modal fade" id="add-auxItem" tabindex="-1" role="dialog" aria-labelledby="addAuxItem">
@@ -13,32 +17,42 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="row">
                     <div class="form-group">
-                        <div class="col-md-10">
-                                <div class="col-md-4">
-                                    <form asp-action="Create">
-                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        <div class="input-group row">
-                                            <label asp-for="Current.Name" class="control-label"></label>
-                                            <input id="auxItemName" class="form-control-alternative" />
-                                            <span asp-validation-for="Current.Name" class="text-danger"></span>
-                                        </div>
-                                        <div class="input-group row">
-                                            <label asp-for="Current.Cost" class="control-label"></label>
-                                            <input id="auxItemCost" class="form-control-alternative" />
-                                            <span asp-validation-for="Current.Cost" class="text-danger"></span>
-                                        </div>
-                                        <div class="input-group row">
-                                            <label asp-for="Current.Description" class="control-label"></label>
-                                            <input id="auxItemDesc" class="form-control-alternative" />
-                                            <span asp-validation-for="Current.Description" class="text-danger"></span>
-                                        </div>
-                                    </form>
+                        <div class="col-md-12">
+                            <form asp-action="Create">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="input-group row">
+                                    <div class="col-md-3">
+                                        <label asp-for="Current.Category" class="control-label"></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select id="auxItemCategory" asp-for="Current.Category" asp-items="Html.GetEnumSelectList<AuxItemCategory>()" class="form-control">
+                                            <option selected="selected" value="">Please select</option>
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="Current.Category" class="text-danger"></span>
                                 </div>
+                                <div class="input-group row">
+                                    <div class="col-md-3">
+                                        <label asp-for="Current.Cost" class="control-label"></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id="auxItemCost" class="form-control" />
+                                        <span asp-validation-for="Current.Cost" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group row">
+                                    <div class="col-md-3">
+                                        <label asp-for="Current.Description" class="control-label"></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input id="auxItemDesc" class="form-control" />
+                                        <span asp-validation-for="Current.Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div>
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-success" value="Add" onclick="AddAuxItem()" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

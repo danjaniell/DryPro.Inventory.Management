@@ -29,6 +29,8 @@ namespace DryPro.Inventory.Management.Application.Handlers.CommandHandlers
                 return null;
             }
 
+            //We update auxilliary items in a separate command so we just copy it off here
+            productEntity.AuxilliaryItems = product.AuxilliaryItems;
             await _productRepo.UpdateAsync(productEntity);
             return product._id;
         }

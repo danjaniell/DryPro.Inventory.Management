@@ -1,5 +1,6 @@
 ﻿using DryPro.Inventory.Management.Application.Commands;
 using DryPro.Inventory.Management.Application.Mappers;
+using DryPro.Inventory.Management.Common.Enums;
 using DryPro.Inventory.Management.Common.Helpers;
 using DryPro.Inventory.Management.Core.Entities;
 using DryPro.Inventory.Management.Infrastructure.Data;
@@ -37,14 +38,9 @@ namespace DryPro.Inventory.Management.UI.Controllers
         [Route("[controller]/Create")]
         public IActionResult Create(IFormCollection collection)
         {
+            var auxItem = JsonConvert.DeserializeObject<AuxilliaryItem>(collection["data"]);
             if (ModelState.IsValid)
             {
-                var auxItem = new AuxilliaryItem()
-                {
-                    Name = collection["name"],
-                    Cost = decimal.Parse(collection["cost"]),
-                    Description = collection["description"],
-                };
                 _auxItemCreateViewModel.AuxilliaryItems.Add(auxItem);
             }
 
@@ -52,13 +48,13 @@ namespace DryPro.Inventory.Management.UI.Controllers
         }
 
         // GET: AuxItem/Edit/5?productId=1
-        public IActionResult Edit(string productId, int id, string name, decimal cost, string description)
+        public IActionResult Edit(string productId, int id, AuxItemCategory category, decimal cost, string description)
         {
             var auxItem = new AuxilliaryItem()
             {
                 ProductId = productId,
                 Id = id,
-                Name = name,
+                Category = category,
                 Cost = cost,
                 Description = description
             };
